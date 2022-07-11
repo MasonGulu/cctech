@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "cctech:block/machine_side",
+    "front": "cctech:block/reel_to_reel",
+    "side": "cctech:block/machine_side"
+  }
+}

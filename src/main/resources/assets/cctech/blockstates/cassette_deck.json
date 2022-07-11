@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cctech:block/cassette_deck",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cctech:block/cassette_deck"
+    },
+    "facing=south": {
+      "model": "cctech:block/cassette_deck",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cctech:block/cassette_deck",
+      "y": 270
+    }
+  }
+}
