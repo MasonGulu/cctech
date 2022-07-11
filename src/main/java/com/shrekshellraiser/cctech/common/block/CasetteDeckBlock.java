@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class CasetteDeckBlock extends BaseBlock {
 
-    public final BooleanProperty FILLED = ModProperties.FILLED;
     public CasetteDeckBlock() {
         super(Properties.of(Material.METAL));
         this.registerDefaultState(this.stateDefinition.any().setValue(FILLED, false));
@@ -33,7 +32,6 @@ public class CasetteDeckBlock extends BaseBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FILLED);
         super.createBlockStateDefinition(pBuilder);
     }
 

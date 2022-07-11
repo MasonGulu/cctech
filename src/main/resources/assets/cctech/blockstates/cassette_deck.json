@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,filled=false": {
       "model": "cctech:block/cassette_deck",
       "y": 90
     },
-    "facing=north": {
+    "facing=north,filled=false": {
       "model": "cctech:block/cassette_deck"
     },
-    "facing=south": {
+    "facing=south,filled=false": {
       "model": "cctech:block/cassette_deck",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,filled=false": {
       "model": "cctech:block/cassette_deck",
+      "y": 270
+    },
+    "facing=east,filled=true": {
+      "model": "cctech:block/cassette_deck_filled",
+      "y": 90
+    },
+    "facing=north,filled=true": {
+      "model": "cctech:block/cassette_deck_filled"
+    },
+    "facing=south,filled=true": {
+      "model": "cctech:block/cassette_deck_filled",
+      "y": 180
+    },
+    "facing=west,filled=true": {
+      "model": "cctech:block/cassette_deck_filled",
       "y": 270
     }
   }

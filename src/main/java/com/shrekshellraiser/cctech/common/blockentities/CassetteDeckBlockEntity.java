@@ -1,5 +1,6 @@
 package com.shrekshellraiser.cctech.common.blockentities;
 
+import com.shrekshellraiser.cctech.CCTech;
 import com.shrekshellraiser.cctech.common.ModProperties;
 import com.shrekshellraiser.cctech.common.item.CassetteItem;
 import com.shrekshellraiser.cctech.common.peripheral.CassetteDeckPeripheral;
@@ -53,6 +54,7 @@ public class CassetteDeckBlockEntity extends BaseStorageBlockEntity {
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CassetteDeckBlockEntity pBlockEntity) {
         boolean hasTape = pBlockEntity.getItem() instanceof CassetteItem;
         if (hasTape != pState.getValue(ModProperties.FILLED)) {
+            CCTech.LOGGER.debug("State of cassette deck changed");
             pState = pState.setValue(ModProperties.FILLED, hasTape);
             pLevel.setBlock(pPos, pState, 3);
             setChanged(pLevel, pPos, pState);

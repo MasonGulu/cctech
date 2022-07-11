@@ -1,5 +1,9 @@
 package com.shrekshellraiser.cctech.common.blockentities;
 
+import com.shrekshellraiser.cctech.CCTech;
+import com.shrekshellraiser.cctech.common.ModProperties;
+import com.shrekshellraiser.cctech.common.item.CassetteItem;
+import com.shrekshellraiser.cctech.common.item.ReelItem;
 import com.shrekshellraiser.cctech.common.peripheral.ReelToReelPeripheral;
 import com.shrekshellraiser.cctech.screen.ReelToReelMenu;
 import net.minecraft.core.BlockPos;
@@ -50,8 +54,12 @@ public class ReelToReelBlockEntity extends BaseStorageBlockEntity {
 
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ReelToReelBlockEntity pBlockEntity) {
-        // nothing for now..
+        boolean hasTape = pBlockEntity.getItem() instanceof ReelItem;
+        if (hasTape != pState.getValue(ModProperties.FILLED)) {
+            CCTech.LOGGER.debug("State of cassette deck changed");
+            pState = pState.setValue(ModProperties.FILLED, hasTape);
+            pLevel.setBlock(pPos, pState, 3);
+            setChanged(pLevel, pPos, pState);
+        }
     }
-
-
 }

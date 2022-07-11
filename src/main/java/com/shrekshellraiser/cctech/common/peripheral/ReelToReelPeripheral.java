@@ -67,4 +67,8 @@ public class ReelToReelPeripheral implements IPeripheral {
     public final boolean seek(int offset) {
         return tileEntity.seekRel(offset);
     }
+    @LuaFunction
+    public final boolean seekAbs(int loc) {
+        return tileEntity.seekAbs(loc);
+    }
 }
