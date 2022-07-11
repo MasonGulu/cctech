@@ -18,7 +18,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = '1.18.2-0.0.1.0'
+version = '1.18.2-0.0.1'
 group = 'com.shrekshellraiser.cctech' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cctech'
 
@@ -181,11 +181,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "cctech",
-                "Specification-Vendor"    : "cctechsareus",
+                "Specification-Vendor"    : "shrekshellraiser",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "cctechsareus",
+                "Implementation-Vendor"   : "shrekshellraiser",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

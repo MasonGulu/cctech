@@ -28,7 +28,7 @@ public class ReelToReelPeripheral implements IPeripheral {
     }
 
     @Override
-    public boolean equals(@Nonnull IPeripheral other) {
+    public boolean equals(IPeripheral other) {
         return this == other;
     }
 
@@ -70,5 +70,9 @@ public class ReelToReelPeripheral implements IPeripheral {
     @LuaFunction
     public final boolean seekAbs(int loc) {
         return tileEntity.seekAbs(loc);
+    }
+    @LuaFunction
+    public final int getPos() {
+        return tileEntity.getPointer();
     }
 }

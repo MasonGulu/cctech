@@ -34,28 +34,32 @@ public abstract class BaseStorageBlockEntity extends BlockEntity implements Menu
     }
     protected LazyOptional<IPeripheral> peripheralCap;
 
-    protected final ItemStackHandler itemHandler = new ItemStackHandler(1) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-            assert level != null;
-            if (!level.isClientSide()) {
-                ItemStack item = getStackInSlot(slot);
-                if (item.getItem() instanceof IStorageItem && !deviceInserted) {
-                    // cassette has just been inserted
-                    CCTech.LOGGER.debug("Cassette inserted");
-                    loadData(item);
-                    deviceInserted = true;
-                } else if ((uuid != null) && deviceInserted) {
-                    // cassette has been removed
-                    CCTech.LOGGER.debug("Cassette removed");
-                    saveData(item);
-                    deviceInserted = false;
-                    uuid = null;
+    protected ItemStackHandler createItemHandler() {
+        return new ItemStackHandler(1) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+                assert level != null;
+                if (!level.isClientSide()) {
+                    ItemStack item = getStackInSlot(slot);
+                    if (item.getItem() instanceof IStorageItem && !deviceInserted) {
+                        // cassette has just been inserted
+                        CCTech.LOGGER.debug("Cassette inserted");
+                        loadData(item);
+                        deviceInserted = true;
+                    } else if ((uuid != null) && deviceInserted) {
+                        // cassette has been removed
+                        CCTech.LOGGER.debug("Cassette removed");
+                        saveData(item);
+                        deviceInserted = false;
+                        uuid = null;
+                    }
                 }
             }
-        }
-    };
+        };
+    }
+
+    protected final ItemStackHandler itemHandler = createItemHandler();
     public Item getItem() {
         return itemHandler.getStackInSlot(0).getItem();
     }
@@ -161,7 +165,7 @@ public abstract class BaseStorageBlockEntity extends BlockEntity implements Menu
         return true;
     }
 
-    private void loadData(ItemStack item) {
+    void loadData(ItemStack item) {
         uuid = ((IStorageItem) item.getItem()).getUUID(item);
         data = FileManager.getData(deviceDir, uuid);
         pointer = FileManager.getPointer(data);
@@ -175,7 +179,7 @@ public abstract class BaseStorageBlockEntity extends BlockEntity implements Menu
         }
     }
 
-    private void saveData(ItemStack item) {
+    void saveData(ItemStack item) {
         FileManager.saveData(data, pointer, deviceDir, uuid);
     }
 }
