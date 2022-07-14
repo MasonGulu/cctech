@@ -25,7 +25,7 @@ public class StorageItem extends Item {
         if (stack.hasTag()) {
             CompoundTag tag = stack.getTag();
             if (tag.contains(UUIDTag))
-                uuid = tag.getString("cctech.uuid"); // get a string from tag cctech.uuid
+                uuid = tag.getString(UUIDTag); // get a string from tag cctech.uuid
             else {
                 uuid = UUID.randomUUID().toString();
                 tag.putString(UUIDTag, uuid);

@@ -179,7 +179,7 @@ public abstract class TapeBlockEntity extends BlockEntity implements MenuProvide
 
     void loadData(ItemStack item) {
         uuid = ((StorageItem) item.getItem()).getUUID(item);
-        data = FileManager.getData(deviceDir, uuid, ((TapeItem) item.getItem()).getLength() + POINTER_SIZE);
+        data = FileManager.getData(deviceDir, uuid, ((TapeItem) item.getItem()).getLength(item) + POINTER_SIZE);
         pointer = FileManager.getPointer(data);
     }
 

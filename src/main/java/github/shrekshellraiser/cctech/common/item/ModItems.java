@@ -17,29 +17,31 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, CCTech.MODID);
 
+    private static final int DEFAULT_SIZE = CCTechCommonConfigs.CASSETTE_DEFAULT.get();
+
     public static final RegistryObject<Item> IRON_CASSETTE = ITEMS.register("iron_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.IRON_CASSETTE.get(), CCTechCommonConfigs.IRON_CASSETTE.get()));
+            new CassetteItem(CCTechCommonConfigs.IRON_CASSETTE.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> GOLD_CASSETTE = ITEMS.register("gold_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.GOLD_CASSETTE.get(), CCTechCommonConfigs.GOLD_CASSETTE.get()));
+            new CassetteItem(CCTechCommonConfigs.GOLD_CASSETTE.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> DIAMOND_CASSETTE = ITEMS.register("diamond_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.DIAMOND_CASSETTE.get(), CCTechCommonConfigs.DIAMOND_CASSETTE.get()));
+            new CassetteItem(CCTechCommonConfigs.DIAMOND_CASSETTE.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> CREATIVE_CASSETTE = ITEMS.register("creative_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.CREATIVE_CASSETTE.get(), CCTechCommonConfigs.CREATIVE_CASSETTE.get()));
+            new CassetteItem(CCTechCommonConfigs.CREATIVE_CASSETTE.get(), DEFAULT_SIZE));
 
     public static final RegistryObject<Item> TAPE = ITEMS.register("tape", () -> new Item(
             new Item.Properties().tab(ModCreativeModeTab.CCTECH_TAB)));
 
     public static final RegistryObject<Item> IRON_REEL = ITEMS.register("iron_reel", () ->
-            new ReelItem(CCTechCommonConfigs.IRON_REEL.get()));
+            new ReelItem(CCTechCommonConfigs.IRON_REEL.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> GOLD_REEL = ITEMS.register("gold_reel", () ->
-            new ReelItem(CCTechCommonConfigs.GOLD_REEL.get()));
+            new ReelItem(CCTechCommonConfigs.GOLD_REEL.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> DIAMOND_REEL = ITEMS.register("diamond_reel", () ->
-            new ReelItem(CCTechCommonConfigs.DIAMOND_REEL.get()));
+            new ReelItem(CCTechCommonConfigs.DIAMOND_REEL.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> CREATIVE_REEL = ITEMS.register("creative_reel", () ->
-            new ReelItem(CCTechCommonConfigs.CREATIVE_REEL.get()));
+            new ReelItem(CCTechCommonConfigs.CREATIVE_REEL.get(), DEFAULT_SIZE));
 
-    public static final RegistryObject<Item> CD = ITEMS.register("cd", () ->
-            new CDItem(10000, 100, 32));
+//    public static final RegistryObject<Item> CD = ITEMS.register("cd", () ->
+//            new CDItem(10000, 100, 32));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

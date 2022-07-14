@@ -5,9 +5,10 @@ import github.shrekshellraiser.cctech.common.item.StorageItem;
 
 public class ReelItem extends TapeItem {
     // possible future qol things... cassettes are in their packaging until they're used once??? maybe apply that to everything
-    public ReelItem(int length) {
+    public ReelItem(int length, int defaultLength) {
         super(new Properties().tab(ModCreativeModeTab.CCTECH_TAB).stacksTo(1));
-        this.length = length;
+        this.maxLength = length;
+        this.defaultLength = defaultLength;
     }
 
     public static String getDeviceDir() {
