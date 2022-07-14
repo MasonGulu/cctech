@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 version = '1.18.2-0.0.1'
-group = 'com.shrekshellraiser.cctech' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'github.shrekshellraiser.cctech' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cctech'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
