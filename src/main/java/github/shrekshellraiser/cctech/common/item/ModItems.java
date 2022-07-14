@@ -18,13 +18,13 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, CCTech.MODID);
 
     public static final RegistryObject<Item> IRON_CASSETTE = ITEMS.register("iron_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.IRON_CASSETTE.get(), 1000));
+            new CassetteItem(CCTechCommonConfigs.IRON_CASSETTE.get(), CCTechCommonConfigs.IRON_CASSETTE.get()));
     public static final RegistryObject<Item> GOLD_CASSETTE = ITEMS.register("gold_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.GOLD_CASSETTE.get(), 1000));
+            new CassetteItem(CCTechCommonConfigs.GOLD_CASSETTE.get(), CCTechCommonConfigs.GOLD_CASSETTE.get()));
     public static final RegistryObject<Item> DIAMOND_CASSETTE = ITEMS.register("diamond_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.DIAMOND_CASSETTE.get(), 1000));
+            new CassetteItem(CCTechCommonConfigs.DIAMOND_CASSETTE.get(), CCTechCommonConfigs.DIAMOND_CASSETTE.get()));
     public static final RegistryObject<Item> CREATIVE_CASSETTE = ITEMS.register("creative_cassette", () ->
-            new CassetteItem(CCTechCommonConfigs.CREATIVE_CASSETTE.get(), 1000));
+            new CassetteItem(CCTechCommonConfigs.CREATIVE_CASSETTE.get(), CCTechCommonConfigs.CREATIVE_CASSETTE.get()));
 
     public static final RegistryObject<Item> TAPE = ITEMS.register("tape", () -> new Item(
             new Item.Properties().tab(ModCreativeModeTab.CCTECH_TAB)));

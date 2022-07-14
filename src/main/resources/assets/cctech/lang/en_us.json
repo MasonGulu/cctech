@@ -1,15 +1,15 @@
 {
-  "item.cctech.iron_cassette": "Iron Cassette",
-  "item.cctech.gold_cassette": "Gold Cassette",
-  "item.cctech.diamond_cassette": "Diamond Cassette",
-  "item.cctech.creative_cassette": "Creative Cassette",
+  "item.cctech.iron_cassette": "DEPRECATED Iron Cassette",
+  "item.cctech.gold_cassette": "DEPRECATED Gold Cassette",
+  "item.cctech.diamond_cassette": "DEPRECATED Diamond Cassette",
+  "item.cctech.creative_cassette": "DEPRECATED Creative Cassette",
 
   "block.cctech.cassette_deck": "Cassette Deck",
 
-  "item.cctech.iron_reel": "Iron Reel",
-  "item.cctech.gold_reel": "Gold Reel",
-  "item.cctech.diamond_reel": "Diamond Reel",
-  "item.cctech.creative_reel": "Creative Reel",
+  "item.cctech.iron_reel": "DEPRECATED Iron Reel",
+  "item.cctech.gold_reel": "DEPRECATED Gold Reel",
+  "item.cctech.diamond_reel": "DEPRECATED Diamond Reel",
+  "item.cctech.creative_reel": "DEPRECATED Creative Reel",
 
   "block.cctech.reel_to_reel": "Reel To Reel",
 
