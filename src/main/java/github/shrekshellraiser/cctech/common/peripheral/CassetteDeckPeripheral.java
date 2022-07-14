@@ -72,4 +72,12 @@ public class CassetteDeckPeripheral implements IPeripheral {
     public final boolean seek(int offset) {
         return tileEntity.seekRel(offset);
     }
+    @LuaFunction
+    public final boolean setLabel(String label) {
+        return tileEntity.setLabel(label);
+    }
+    @LuaFunction
+    public final boolean clearLabel() {
+        return tileEntity.clearLabel();
+    }
 }

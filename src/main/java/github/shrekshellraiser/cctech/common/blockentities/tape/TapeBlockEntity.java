@@ -176,6 +176,21 @@ public abstract class TapeBlockEntity extends BlockEntity implements MenuProvide
         }
         return true;
     }
+    public boolean setLabel(String label) {
+        if (!deviceInserted)
+            return false;
+        ItemStack item = itemHandler.getStackInSlot(0);
+        ((StorageItem) item.getItem()).setLabel(item, label);
+        return true;
+    }
+
+    public boolean clearLabel() {
+        if (!deviceInserted)
+            return false;
+        ItemStack item = itemHandler.getStackInSlot(0);
+        ((StorageItem) item.getItem()).removeLabel(item);
+        return true;
+    }
 
     void loadData(ItemStack item) {
         uuid = ((StorageItem) item.getItem()).getUUID(item);
@@ -186,4 +201,6 @@ public abstract class TapeBlockEntity extends BlockEntity implements MenuProvide
     void saveData(ItemStack item) {
         FileManager.saveData(data, pointer, deviceDir, uuid);
     }
+
+
 }

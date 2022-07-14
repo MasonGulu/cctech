@@ -80,4 +80,12 @@ public class ReelToReelPeripheral implements IPeripheral {
     public final int getPos() {
         return tileEntity.getPointer();
     }
+    @LuaFunction
+    public final boolean setLabel(String label) {
+        return tileEntity.setLabel(label);
+    }
+    @LuaFunction
+    public final boolean clearLabel() {
+        return tileEntity.clearLabel();
+    }
 }

@@ -15,6 +15,7 @@ import java.util.UUID;
 
 public class StorageItem extends Item {
     private final String UUIDTag = "cctech.uuid";
+    private final String LabelTag = "cctech.label";
 
     public StorageItem(Properties pProperties) {
         super(pProperties);
@@ -40,12 +41,50 @@ public class StorageItem extends Item {
         return uuid;
     }
 
+    public String getLabel(ItemStack stack) {
+        String label = null;
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            if (tag.contains(LabelTag))
+                label = tag.getString(LabelTag); // get a string from tag cctech.uuid
+        }
+        return label;
+    }
+
+    public void setLabel(ItemStack stack, String label) {
+        CompoundTag tag;
+        if (stack.hasTag()) {
+            tag = stack.getTag();
+            if (tag.contains(LabelTag))
+                tag.putString(LabelTag, label);
+            else {
+                tag.putString(LabelTag, label);
+            }
+        } else {
+            tag = new CompoundTag();
+            tag.putString(LabelTag, label);
+        }
+        stack.setTag(tag);
+    }
+
+    public void removeLabel(ItemStack stack) {
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            if (tag.contains(LabelTag))
+                tag.remove(LabelTag);
+        }
+    }
+
+
     public static String getDeviceDir() {
         throw new RuntimeException("Don't forget to overwrite getDeviceDir!");
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        String label = getLabel(pStack);
+        if (label != null)
+            pTooltipComponents.add(new TextComponent(label));
         if (Screen.hasShiftDown() && pStack.hasTag() && pStack.getTag().contains(UUIDTag)) {
             String uuid = pStack.getTag().getString(UUIDTag);
             pTooltipComponents.add(new TextComponent(uuid));

@@ -67,13 +67,6 @@ public class TapeItem extends StorageItem {
         stack.setTag(tag);
         return length != oldLength;
     }
-    @Override
-    public int getUseDuration(ItemStack pStack) {
-        return 72000;
-    }
-    public @NotNull UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.BOW;
-    }
 
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack pStack = pPlayer.getItemInHand(pHand);
@@ -92,10 +85,5 @@ public class TapeItem extends StorageItem {
             }
         }
         return InteractionResultHolder.fail(pStack);
-    }
-
-    @Override
-    public void releaseUsing(@NotNull ItemStack pStack, Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
-
     }
 }
