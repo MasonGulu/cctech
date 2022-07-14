@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " m ",
+    "mtm",
+    " m "
+  ],
+  "key": {
+    "m": {
+      "item": "minecraft:diamond"
+    },
+    "t": {
+      "item": "cctech:tape"
+    }
+  },
+  "result": {
+    "item": "cctech:diamond_reel"
+  }
+}

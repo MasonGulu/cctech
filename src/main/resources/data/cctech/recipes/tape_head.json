@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cic",
+    "cnc"
+  ],
+  "key": {
+    "c": {
+      "tag": "forge:ingots/copper"
+    },
+    "n": {
+      "tag": "forge:nuggets/iron"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "cctech:tape_head"
+  }
+}

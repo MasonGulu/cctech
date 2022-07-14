@@ -31,6 +31,9 @@ public class ModItems {
     public static final RegistryObject<Item> TAPE = ITEMS.register("tape", () -> new Item(
             new Item.Properties().tab(ModCreativeModeTab.CCTECH_TAB)));
 
+    public static final RegistryObject<Item> TAPE_HEAD = ITEMS.register("tape_head", () -> new Item(
+            new Item.Properties().tab(ModCreativeModeTab.CCTECH_TAB)));
+
     public static final RegistryObject<Item> IRON_REEL = ITEMS.register("iron_reel", () ->
             new ReelItem(CCTechCommonConfigs.IRON_REEL.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> GOLD_REEL = ITEMS.register("gold_reel", () ->

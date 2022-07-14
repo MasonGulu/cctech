@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#@#",
+    "0$n"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/iron"
+    },
+    "0": {
+      "item": "cctech:tape"
+    },
+    "$": {
+      "tag": "forge:glass"
+    },
+    "@": {
+      "item": "minecraft:paper"
+    },
+    "n": {
+      "tag": "forge:nuggets/iron"
+    }
+  },
+  "result": {
+    "item": "cctech:iron_cassette"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#m#",
+    "srs",
+    "#T#"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:stone"
+    },
+    "T": {
+      "item": "cctech:tape_head"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "m": {
+      "tag": "forge:ingots/iron"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cctech:cassette_deck"
+  }
+}

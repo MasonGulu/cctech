@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " m ",
+    "mtm",
+    " m "
+  ],
+  "key": {
+    "m": {
+      "tag": "forge:ingots/iron"
+    },
+    "t": {
+      "item": "cctech:tape"
+    }
+  },
+  "result": {
+    "item": "cctech:iron_reel"
+  }
+}

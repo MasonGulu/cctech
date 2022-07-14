@@ -24,7 +24,7 @@ public class ReelToReelPeripheral implements IPeripheral {
     @NotNull
     @Override
     public String getType() {
-        return "cassette_deck";
+        return "reel_to_reel";
     }
 
     @Override

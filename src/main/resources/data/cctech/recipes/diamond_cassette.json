@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#@#",
+    "0$n"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diamond"
+    },
+    "0": {
+      "item": "cctech:tape"
+    },
+    "$": {
+      "tag": "forge:glass"
+    },
+    "@": {
+      "item": "minecraft:paper"
+    },
+    "n": {
+      "tag": "forge:nuggets/iron"
+    }
+  },
+  "result": {
+    "item": "cctech:diamond_cassette"
+  }
+}

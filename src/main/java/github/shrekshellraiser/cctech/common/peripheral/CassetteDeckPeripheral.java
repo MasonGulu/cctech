@@ -28,7 +28,7 @@ public class CassetteDeckPeripheral implements IPeripheral {
     }
 
     @Override
-    public boolean equals(@Nonnull IPeripheral other) {
+    public boolean equals(IPeripheral other) {
         return this == other;
     }
 
@@ -51,7 +51,9 @@ public class CassetteDeckPeripheral implements IPeripheral {
     public final String read(int characters) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < characters; i++) {
-            stringBuilder.append(tileEntity.readChar());
+            String readChar = tileEntity.readChar();
+            stringBuilder.append(readChar);
+            if (readChar.equals("")) break;
         }
         return stringBuilder.toString();
     }

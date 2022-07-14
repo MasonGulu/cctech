@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "cctech:cassette_deck"
+    "cctech:cassette_deck",
+    "cctech:reel_to_reel"
   ]
 }
