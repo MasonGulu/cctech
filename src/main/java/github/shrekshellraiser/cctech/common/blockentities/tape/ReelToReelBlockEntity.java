@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -41,7 +42,7 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return new TextComponent("Reel To Reel");
+        return new TranslatableComponent("block.cctech.reel_to_reel");
     }
 
     @Nullable
