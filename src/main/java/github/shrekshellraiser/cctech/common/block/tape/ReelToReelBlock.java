@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ReelToReelBlock extends StorageBlock {
     public ReelToReelBlock() {
-        super(Properties.of(Material.METAL));
+        super(Properties.of(Material.METAL).strength(2f));
     }
 
     @Nullable

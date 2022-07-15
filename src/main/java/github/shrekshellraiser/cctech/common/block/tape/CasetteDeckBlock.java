@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class CasetteDeckBlock extends StorageBlock {
 
     public CasetteDeckBlock() {
-        super(Properties.of(Material.METAL));
+        super(Properties.of(Material.METAL).strength(2f));
         this.registerDefaultState(this.stateDefinition.any().setValue(FILLED, false));
     }
 
