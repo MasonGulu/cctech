@@ -1,0 +1,20 @@
+{
+  "item.cctech.iron_cassette": "Small Irun box",
+  "item.cctech.gold_cassette": "Small Shiny Box",
+  "item.cctech.diamond_cassette": "Small Super Shiny Box",
+  "item.cctech.creative_cassette": "Small Cheater Box",
+
+  "block.cctech.cassette_deck": "Small Box Machine",
+
+  "item.cctech.iron_reel": "Irun Reel",
+  "item.cctech.gold_reel": "Shiny Reel",
+  "item.cctech.diamond_reel": "Super Shiny Reel",
+  "item.cctech.creative_reel": "Cheater Reel",
+
+  "block.cctech.reel_to_reel": "Reel To Reel",
+
+  "item.cctech.tape": "Tape",
+  "item.cctech.tape_head": "Tape Tail",
+
+  "itemGroup.cctech_tab": "CCTech"
+}

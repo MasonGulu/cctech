@@ -1,0 +1,20 @@
+{
+  "item.cctech.iron_cassette": "Jern Kassett",
+  "item.cctech.gold_cassette": "Gull Kassett",
+  "item.cctech.diamond_cassette": "Diamant Kassett",
+  "item.cctech.creative_cassette": "Kreativ Kassett",
+
+  "block.cctech.cassette_deck": "Kassettdekk",
+
+  "item.cctech.iron_reel": "Jern Filmrull",
+  "item.cctech.gold_reel": "Gull Filmrull",
+  "item.cctech.diamond_reel": "Diamant Filmrull",
+  "item.cctech.creative_reel": "Kreativ Filmrull",
+
+  "block.cctech.reel_to_reel": "Rull til Rull",
+
+  "item.cctech.tape": "Magnetisk Teip",
+  "item.cctech.tape_head": "Teip hode",
+
+  "itemGroup.cctech_tab": "CCTech"
+}
