@@ -19,7 +19,7 @@ public class CCTechCommonConfigs {
     public static final ForgeConfigSpec.ConfigValue<Integer> TAPE_SIZE;
 
     static {
-        final int MAX_SIZE = 0xFFFFFFFF;
+        final int MAX_SIZE = 2147483647;
         BUILDER.push("CCTech Config");
 
         IRON_CASSETTE = BUILDER.defineInRange("Iron Cassette Size", 160000, 1, MAX_SIZE);
