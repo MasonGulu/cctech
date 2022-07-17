@@ -29,7 +29,13 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
 
     @Override
     protected void itemRemoved(ItemStack item) {
+        pointer = 0;
         super.itemRemoved(item);
+    }
+
+    @Override
+    protected void itemInserted(ItemStack item) {
+        super.itemInserted(item);
         pointer = 0;
     }
 
@@ -74,7 +80,7 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ReelToReelBlockEntity pBlockEntity) {
         boolean hasTape = pBlockEntity.getItem() instanceof ReelItem;
         if (hasTape != pState.getValue(ModProperties.FILLED)) {
-            CCTech.LOGGER.debug("State of cassette deck changed");
+            CCTech.LOGGER.debug("State of reel to reel changed");
             pState = pState.setValue(ModProperties.FILLED, hasTape);
             pLevel.setBlock(pPos, pState, 3);
             setChanged(pLevel, pPos, pState);
