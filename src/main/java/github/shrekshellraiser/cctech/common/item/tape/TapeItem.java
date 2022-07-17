@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.UUID;
 
 public class TapeItem extends StorageItem {
     protected int defaultLength;
@@ -62,6 +61,7 @@ public class TapeItem extends StorageItem {
         CCTech.LOGGER.debug("Target length "+length);
         length = Math.min(length, maxLength);
         int oldLength = getLength(stack); // ensure that the length tag exists
+        length = Math.max(oldLength, length); // ensure not to shrink the tape if it's larger than the max allowed size
         CompoundTag tag = stack.getTag();
         tag.putInt(LengthTag, length);
         stack.setTag(tag);
