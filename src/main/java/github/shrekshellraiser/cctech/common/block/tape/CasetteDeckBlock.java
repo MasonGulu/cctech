@@ -1,8 +1,8 @@
 package github.shrekshellraiser.cctech.common.block.tape;
 
 import github.shrekshellraiser.cctech.common.block.StorageBlock;
-import github.shrekshellraiser.cctech.common.blockentities.tape.CassetteDeckBlockEntity;
 import github.shrekshellraiser.cctech.common.blockentities.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.blockentities.tape.CassetteDeckBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;

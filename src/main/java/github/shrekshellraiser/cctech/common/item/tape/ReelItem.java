@@ -1,7 +1,6 @@
 package github.shrekshellraiser.cctech.common.item.tape;
 
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
-import github.shrekshellraiser.cctech.common.item.StorageItem;
 
 public class ReelItem extends TapeItem {
     // possible future qol things... cassettes are in their packaging until they're used once??? maybe apply that to everything

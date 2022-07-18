@@ -1,10 +1,10 @@
 package github.shrekshellraiser.cctech.common.blockentities.tape;
 
+import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
 import github.shrekshellraiser.cctech.server.FileManager;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
