@@ -28,19 +28,19 @@ end
 local function findNextHeader()
   local FFCount = 0
   local distance = 0
-  while FFCount < 10 do
-    distance = distance + 1
+  while FFCount < 10 do -- look for 10 FF bytes in a row
+    distance = distance + 1 -- just keep track of distance to occasionally yield
     local char = drive.read(1)
-    if char == "\255" then
+    if char == "\xff" then
       FFCount = FFCount + 1
     elseif char == "" then
       -- empty string indicates end of tape
       return false
     else
-      FFCount = 0
+      FFCount = 0 -- this character wasn't an FF byte
     end
     if math.mod(distance, 500000) == 0 then
-      sleep(0)
+      sleep(0) -- yield to avoid a crash
     end
   end
   return true
@@ -56,7 +56,7 @@ local function findNextFile()
   -- 4 bytes LSB of file length
   -- File data
   if not findNextHeader() then
-    return
+    return -- no more files on tape
   end
   -- at this point we're at the filename
   local filename = ""
@@ -67,32 +67,21 @@ local function findNextFile()
     if lastChar ~= "\0" then
       filename = filename..lastChar
     end
-  until lastChar == "\0"
+  until lastChar == "\0" -- null terminated filename
   -- we have the filename now
   local byteString = drive.read(4)
-  local length = 0
-  for i = 4, 1, -1 do
-    length = bit32.lshift(length, 8) + string.byte(byteString, i)
-  end
+---@diagnostic disable-next-line: deprecated
+  local length = string.unpack("<I4", byteString) -- convert 4 characters to a 4 byte unsigned int
   return filename, length
 end
 
-local function lenToByteString(length)
-  local str = ""
-  for i = 1, 4 do
-    str = str..string.char(bit32.band(length, 255))
-    length = bit32.rshift(length, 8)
-  end
-  return str
-end
-
 local function findFile(filename)
-  seek(0)
+  seek(0) -- goto start of tape
   local name, len
   repeat
     name, len = findNextFile()
     if name ~= filename and name ~= nil then
-      drive.seek(len) -- skip past this file
+      drive.seek(len) -- this file isn't what we're looking for, skip it
     end
     if name ~= nil then
       print(string.format("Found %s", name))
@@ -128,7 +117,7 @@ local function main()
       printHelp()
       return
     end
-    arg[3] = arg[3] or arg[2]
+    arg[3] = arg[3] or arg[2] -- setup default output filename
     local f, e = fs.open(arg[3], "wb")
     assert(f, e) -- ensure the file is open, if it can't be, error with the reason
     seek(0) -- seek to beginning of tape
@@ -143,16 +132,17 @@ local function main()
       printHelp()
       return
     end
-    arg[3] = arg[3] or arg[2]
+    arg[3] = arg[3] or arg[2] -- setup default tape filename
     local f, e = fs.open(arg[2], "rb")
     assert(f, e)
-    local str = f.readAll()
-    findEmptySpace(str:len())
+    local str = f.readAll() -- read whole file into a string
+    local len = str:len()
+    findEmptySpace(len) -- find an empty space on the tape large enough for this file
 
-    drive.write(string.rep("\255", 10))
-    drive.write(arg[3])
+    drive.write(string.rep("\xff", 10)) -- write the 10 byte lead-in
+    drive.write(arg[3]) -- tape filename
     drive.write("\0") -- null terminated string
-    drive.write(lenToByteString(str:len())) -- length of file
+    drive.write(string.pack("<I4", len)) -- length of file
     assert(drive.write(str), "End of tape reached") -- write data
 
     print("File written")
@@ -170,8 +160,8 @@ local function main()
     end
     local name, len = findFile(arg[2])
     assert(name == arg[2], "File not found")
-    drive.seek(-14 - (name:len()+1))
-    drive.write(string.rep("\0", 14 + name:len()+1 + len))
+    drive.seek(-14 - (name:len()+1)) -- seek to start of lead-in
+    drive.write(string.rep("\0", 14 + name:len()+1 + len)) -- wipe section of tape
     print("File deleted")
 
   elseif arg[1] == "list" then
@@ -184,13 +174,14 @@ local function main()
         print(name)
       end
     until name == nil
+
   elseif arg[1] == "wipe" then
     term.write("Are you sure (y/n)? ")
     local selection = read():lower()
     if selection == "y" then
       seek(0)
       local i = 0
-      while drive.write(string.rep("\0", 1000)) do
+      while drive.write(string.rep("\0", 10000)) do
         sleep(0) -- yield
       end
     else
