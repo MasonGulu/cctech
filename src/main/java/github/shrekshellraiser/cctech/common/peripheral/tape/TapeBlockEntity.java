@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.common.blockentities.tape;
+package github.shrekshellraiser.cctech.common.peripheral.tape;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.CCTech;

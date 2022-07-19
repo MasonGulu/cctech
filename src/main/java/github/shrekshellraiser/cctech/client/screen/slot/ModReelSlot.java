@@ -1,18 +1,19 @@
-package github.shrekshellraiser.cctech.screen.slot;
+package github.shrekshellraiser.cctech.client.screen.slot;
 
+import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class ModResultSlot extends SlotItemHandler {
+public class ModReelSlot extends SlotItemHandler {
 
-    public ModResultSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+    public ModReelSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
     }
 
     @Override
     public boolean mayPlace(@NotNull ItemStack stack) {
-        return false;
+        return stack.getItem() instanceof ReelItem;
     }
 }

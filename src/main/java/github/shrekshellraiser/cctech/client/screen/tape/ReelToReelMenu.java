@@ -1,8 +1,10 @@
-package github.shrekshellraiser.cctech.screen;
+package github.shrekshellraiser.cctech.client.screen.tape;
 
-import github.shrekshellraiser.cctech.common.block.ModBlocks;
-import github.shrekshellraiser.cctech.common.blockentities.tape.ReelToReelBlockEntity;
-import github.shrekshellraiser.cctech.screen.slot.ModReelSlot;
+import github.shrekshellraiser.cctech.client.screen.BaseStorageMenu;
+import github.shrekshellraiser.cctech.client.screen.ModMenuTypes;
+import github.shrekshellraiser.cctech.client.screen.slot.ModReelSlot;
+import github.shrekshellraiser.cctech.common.ModBlocks;
+import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

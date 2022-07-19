@@ -1,6 +1,5 @@
 package github.shrekshellraiser.cctech.common;
 
-import github.shrekshellraiser.cctech.common.block.ModBlocks;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 

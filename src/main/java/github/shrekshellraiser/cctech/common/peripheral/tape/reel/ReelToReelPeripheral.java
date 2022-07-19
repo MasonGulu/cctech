@@ -1,9 +1,8 @@
-package github.shrekshellraiser.cctech.common.peripheral;
+package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.common.blockentities.tape.ReelToReelBlockEntity;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
 import org.jetbrains.annotations.NotNull;
 

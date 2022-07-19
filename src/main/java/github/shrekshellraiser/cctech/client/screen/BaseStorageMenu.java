@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.screen;
+package github.shrekshellraiser.cctech.client.screen;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

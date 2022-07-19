@@ -4,7 +4,7 @@ import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
-import github.shrekshellraiser.cctech.config.CCTechCommonConfigs;
+import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

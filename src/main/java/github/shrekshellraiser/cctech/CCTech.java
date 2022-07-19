@@ -1,12 +1,12 @@
 package github.shrekshellraiser.cctech;
 
-import github.shrekshellraiser.cctech.common.block.ModBlocks;
-import github.shrekshellraiser.cctech.common.blockentities.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.ModBlocks;
+import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.item.ModItems;
-import github.shrekshellraiser.cctech.config.CCTechCommonConfigs;
-import github.shrekshellraiser.cctech.screen.CassetteDeckScreen;
-import github.shrekshellraiser.cctech.screen.ModMenuTypes;
-import github.shrekshellraiser.cctech.screen.ReelToReelScreen;
+import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
+import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckScreen;
+import github.shrekshellraiser.cctech.client.screen.ModMenuTypes;
+import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

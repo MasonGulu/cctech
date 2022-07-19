@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.config;
+package github.shrekshellraiser.cctech.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

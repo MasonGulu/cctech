@@ -1,9 +1,8 @@
-package github.shrekshellraiser.cctech.common.peripheral;
+package github.shrekshellraiser.cctech.common.peripheral.tape.cassette;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.common.blockentities.tape.CassetteDeckBlockEntity;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import org.jetbrains.annotations.NotNull;
 

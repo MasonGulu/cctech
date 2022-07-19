@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.screen.slot;
+package github.shrekshellraiser.cctech.client.screen.slot;
 
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import net.minecraft.world.item.ItemStack;

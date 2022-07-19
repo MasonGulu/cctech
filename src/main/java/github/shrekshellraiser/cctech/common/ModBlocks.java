@@ -1,9 +1,9 @@
-package github.shrekshellraiser.cctech.common.block;
+package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
-import github.shrekshellraiser.cctech.common.block.tape.CasetteDeckBlock;
-import github.shrekshellraiser.cctech.common.block.tape.ReelToReelBlock;
+import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CasetteDeckBlock;
+import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlock;
 import github.shrekshellraiser.cctech.common.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;

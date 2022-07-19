@@ -1,9 +1,8 @@
-package github.shrekshellraiser.cctech.common.blockentities;
+package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.block.ModBlocks;
-import github.shrekshellraiser.cctech.common.blockentities.tape.CassetteDeckBlockEntity;
-import github.shrekshellraiser.cctech.common.blockentities.tape.ReelToReelBlockEntity;
+import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
+import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

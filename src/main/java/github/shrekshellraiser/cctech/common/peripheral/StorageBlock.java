@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.common.block;
+package github.shrekshellraiser.cctech.common.peripheral;
 
 import github.shrekshellraiser.cctech.common.ModProperties;
 import net.minecraft.core.BlockPos;

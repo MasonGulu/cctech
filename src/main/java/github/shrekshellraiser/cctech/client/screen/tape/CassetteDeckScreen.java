@@ -1,4 +1,4 @@
-package github.shrekshellraiser.cctech.screen;
+package github.shrekshellraiser.cctech.client.screen.tape;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,11 +9,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class ReelToReelScreen extends AbstractContainerScreen<ReelToReelMenu> {
+public class CassetteDeckScreen extends AbstractContainerScreen<CassetteDeckMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(CCTech.MODID, "textures/gui/reel_to_reel.png");
+            new ResourceLocation(CCTech.MODID, "textures/gui/cassette_deck.png");
 
-    public ReelToReelScreen(ReelToReelMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public CassetteDeckScreen(CassetteDeckMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 

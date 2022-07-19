@@ -3,7 +3,7 @@ package github.shrekshellraiser.cctech.common.item.tape;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.item.ModItems;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
-import github.shrekshellraiser.cctech.config.CCTechCommonConfigs;
+import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

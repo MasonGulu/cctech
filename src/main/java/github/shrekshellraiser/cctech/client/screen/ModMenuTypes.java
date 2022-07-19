@@ -1,6 +1,8 @@
-package github.shrekshellraiser.cctech.screen;
+package github.shrekshellraiser.cctech.client.screen;
 
 import github.shrekshellraiser.cctech.CCTech;
+import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
+import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
