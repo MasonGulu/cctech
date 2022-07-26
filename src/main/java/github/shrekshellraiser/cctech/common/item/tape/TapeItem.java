@@ -36,6 +36,11 @@ public class TapeItem extends StorageItem {
         }
     }
 
+    @Override
+    public int getSize(ItemStack item) {
+        return getLength(item);
+    }
+
     public final static String LengthTag = "cctech.length";
 
     public int getLength(ItemStack stack) {

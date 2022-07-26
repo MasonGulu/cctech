@@ -1,11 +1,16 @@
-package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
+package github.shrekshellraiser.cctech.common.peripheral.sectormedia.zip;
 
 import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.ModProperties;
+import github.shrekshellraiser.cctech.client.screen.sectormedia.ZipDriveMenu;
+import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.ModProperties;
+import github.shrekshellraiser.cctech.common.item.sectormedia.ZipDiskItem;
+import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
+import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
+import github.shrekshellraiser.cctech.common.peripheral.sectormedia.SectorBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
-import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
-import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
+import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckPeripheral;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -24,36 +29,35 @@ import org.jetbrains.annotations.Nullable;
 
 import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
 
-public class ReelToReelBlockEntity extends TapeBlockEntity {
-
-    @Override
-    protected void itemRemoved(ItemStack item) {
-        pointer = 0;
-        super.itemRemoved(item);
+public class ZipDriveBlockEntity extends SectorBlockEntity {
+    public ZipDriveBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
+        super(ModBlockEntities.ZIP_DRIVE.get(), pWorldPosition, pBlockState);
+        deviceDir = ZipDiskItem.getDeviceDir();
     }
+
+    protected ZipDrivePeripheral peripheral = new ZipDrivePeripheral(this);
 
     @Override
     protected void itemInserted(ItemStack item) {
         super.itemInserted(item);
-        pointer = 0;
+        peripheral.deviceInserted();
     }
 
-    public ReelToReelBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(ModBlockEntities.REEL_TO_REEL.get(), pWorldPosition, pBlockState);
-        deviceDir = ReelItem.getDeviceDir();
+    @Override
+    protected void itemRemoved(ItemStack item) {
+        super.itemRemoved(item);
+        peripheral.deviceRemoved();
     }
-
-    protected ReelToReelPeripheral peripheral = new ReelToReelPeripheral(this);
 
     @Override
     public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("block.cctech.reel_to_reel");
+        return new TranslatableComponent("block.cctech.zip_drive");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new ReelToReelMenu(pContainerId, pPlayerInventory, this);
+        return new ZipDriveMenu(pContainerId, pPlayerInventory, this);
     }
 
     @Override
@@ -70,13 +74,13 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
         return super.getCapability(cap, direction);
     }
 
-    @Override
-    public void drops() {
-        pointer = 0;
-        super.drops();
-    }
-
-    public int getPointer() {
-        return pointer;
+    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ZipDriveBlockEntity pBlockEntity) {
+        boolean hasTape = pBlockEntity.getItem() instanceof ZipDiskItem;
+        if (hasTape != pState.getValue(ModProperties.FILLED)) {
+            CCTech.LOGGER.debug("State of zip drive changed");
+            pState = pState.setValue(ModProperties.FILLED, hasTape);
+            pLevel.setBlock(pPos, pState, 3);
+            setChanged(pLevel, pPos, pState);
+        }
     }
 }

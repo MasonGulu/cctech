@@ -16,5 +16,7 @@
   "item.cctech.tape": "Magnetic Tape",
   "item.cctech.tape_head": "Tape Head",
 
-  "itemGroup.cctech_tab": "CCTech"
+  "itemGroup.cctech_tab": "CCTech",
+
+  "block.cctech.zip_drive": "Zip Drive"
 }

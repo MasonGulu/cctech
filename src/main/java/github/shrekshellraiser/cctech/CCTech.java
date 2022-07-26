@@ -1,5 +1,7 @@
 package github.shrekshellraiser.cctech;
 
+import github.shrekshellraiser.cctech.client.screen.sectormedia.ZipDriveMenu;
+import github.shrekshellraiser.cctech.client.screen.sectormedia.ZipDriveScreen;
 import github.shrekshellraiser.cctech.common.ModBlocks;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.item.ModItems;
@@ -50,5 +52,6 @@ public class CCTech {
     private void clientSetup(final FMLClientSetupEvent event) {
         MenuScreens.register(ModMenuTypes.CASSETTE_DECK.get(), CassetteDeckScreen::new);
         MenuScreens.register(ModMenuTypes.REEL_TO_REEL.get(), ReelToReelScreen::new);
+        MenuScreens.register(ModMenuTypes.ZIP_DRIVE.get(), ZipDriveScreen::new);
     }
 }

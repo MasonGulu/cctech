@@ -1,6 +1,7 @@
 package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
+import github.shrekshellraiser.cctech.common.peripheral.sectormedia.zip.ZipDriveBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,6 +22,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("reel_to_reel", () ->
                     BlockEntityType.Builder.of(ReelToReelBlockEntity::new,
                             ModBlocks.REEL_TO_REEL.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ZipDriveBlockEntity>> ZIP_DRIVE =
+            BLOCK_ENTITIES.register("zip_drive", () ->
+                    BlockEntityType.Builder.of(ZipDriveBlockEntity::new,
+                            ModBlocks.ZIP_DRIVE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

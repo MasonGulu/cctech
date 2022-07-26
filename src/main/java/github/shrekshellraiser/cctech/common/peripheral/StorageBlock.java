@@ -19,8 +19,8 @@ public abstract class StorageBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty FILLED = ModProperties.FILLED;
 
-    public StorageBlock(Properties p_49224_) {
-        super(p_49224_);
+    public StorageBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FILLED, false));
     }
 

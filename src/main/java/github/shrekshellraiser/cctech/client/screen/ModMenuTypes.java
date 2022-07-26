@@ -1,6 +1,7 @@
 package github.shrekshellraiser.cctech.client.screen;
 
 import github.shrekshellraiser.cctech.CCTech;
+import github.shrekshellraiser.cctech.client.screen.sectormedia.ZipDriveMenu;
 import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
 import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,6 +21,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<ReelToReelMenu>> REEL_TO_REEL = registerMenuType(ReelToReelMenu::new,
             "reel_to_reel_menu");
+
+    public static final RegistryObject<MenuType<ZipDriveMenu>> ZIP_DRIVE = registerMenuType(ZipDriveMenu::new,
+            "zip_drive_menu");
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,
                                                                                                   String name) {

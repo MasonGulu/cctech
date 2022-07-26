@@ -2,6 +2,7 @@ package github.shrekshellraiser.cctech.common.item;
 
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
+import github.shrekshellraiser.cctech.common.item.sectormedia.ZipDiskItem;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
@@ -41,8 +42,8 @@ public class ModItems {
     public static final RegistryObject<Item> CREATIVE_REEL = ITEMS.register("creative_reel", () ->
             new ReelItem(CCTechCommonConfigs.CREATIVE_REEL.get(), DEFAULT_SIZE));
 
-//    public static final RegistryObject<Item> CD = ITEMS.register("cd", () ->
-//            new CDItem(10000, 100, 32));
+    public static final RegistryObject<Item> ZIP_DISK = ITEMS.register("zip_disk", () ->
+            new ZipDiskItem(96,64,32));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

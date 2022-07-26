@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class StorageItem extends Item {
+public abstract class StorageItem extends Item {
     private final String UUIDTag = "cctech.uuid";
     private final String LabelTag = "cctech.label";
 
@@ -91,4 +91,6 @@ public class StorageItem extends Item {
         }
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
+
+    public abstract int getSize(ItemStack item);
 }
