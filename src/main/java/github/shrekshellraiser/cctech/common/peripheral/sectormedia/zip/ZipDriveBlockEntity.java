@@ -33,20 +33,19 @@ public class ZipDriveBlockEntity extends SectorBlockEntity {
     public ZipDriveBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.ZIP_DRIVE.get(), pWorldPosition, pBlockState);
         deviceDir = ZipDiskItem.getDeviceDir();
+        peripheral = new ZipDrivePeripheral(this);
     }
-
-    protected ZipDrivePeripheral peripheral = new ZipDrivePeripheral(this);
 
     @Override
     protected void itemInserted(ItemStack item) {
         super.itemInserted(item);
-        peripheral.deviceInserted();
+        ((ZipDrivePeripheral)peripheral).deviceInserted();
     }
 
     @Override
     protected void itemRemoved(ItemStack item) {
         super.itemRemoved(item);
-        peripheral.deviceRemoved();
+        ((ZipDrivePeripheral)peripheral).deviceRemoved();
     }
 
     @Override
@@ -58,20 +57,6 @@ public class ZipDriveBlockEntity extends SectorBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new ZipDriveMenu(pContainerId, pPlayerInventory, this);
-    }
-
-    @Override
-    @NotNull
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction direction) {
-        if (cap == CAPABILITY_PERIPHERAL) {
-            if (peripheralCap == null) {
-                peripheralCap = LazyOptional.of(() -> peripheral);
-            }
-            return peripheralCap.cast();
-        } else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemHandler.cast();
-        }
-        return super.getCapability(cap, direction);
     }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, ZipDriveBlockEntity pBlockEntity) {

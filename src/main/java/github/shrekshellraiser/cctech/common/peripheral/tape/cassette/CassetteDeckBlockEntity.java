@@ -27,9 +27,9 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
     public CassetteDeckBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.CASSETTE_DECK.get(), pWorldPosition, pBlockState);
         deviceDir = CassetteItem.getDeviceDir();
+        peripheral = new CassetteDeckPeripheral(this);
     }
 
-    protected CassetteDeckPeripheral peripheral = new CassetteDeckPeripheral(this);
 
     @Override
     public @NotNull Component getDisplayName() {
@@ -40,20 +40,6 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new CassetteDeckMenu(pContainerId, pPlayerInventory, this);
-    }
-
-    @Override
-    @NotNull
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction direction) {
-        if (cap == CAPABILITY_PERIPHERAL) {
-            if (peripheralCap == null) {
-                peripheralCap = LazyOptional.of(() -> peripheral);
-            }
-            return peripheralCap.cast();
-        } else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemHandler.cast();
-        }
-        return super.getCapability(cap, direction);
     }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CassetteDeckBlockEntity pBlockEntity) {

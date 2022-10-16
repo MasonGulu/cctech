@@ -10,6 +10,7 @@ import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckScreen;
 import github.shrekshellraiser.cctech.client.screen.ModMenuTypes;
 import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -47,6 +48,7 @@ public class CCTech {
 
     private void setup(final FMLCommonSetupEvent event) {
         // preinitcode
+
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

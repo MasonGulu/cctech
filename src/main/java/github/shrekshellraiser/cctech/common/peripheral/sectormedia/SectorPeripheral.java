@@ -104,7 +104,7 @@ public abstract class SectorPeripheral implements IPeripheral {
         geometry.put("cylinders", item.getCylinders());
         geometry.put("heads", item.getHeads());
         geometry.put("sectorSize", item.getSectorSize());
-        geometry.put("logicalBlocks", ((item.getCylinders()-1) * item.getHeads() + (item.getHeads()-1)) * item.getSectors() + item.getSectors());
+        geometry.put("logicalBlocks", item.getCylinders() * item.getHeads() * item.getSectors());
           // number of logical blocks (indexed from 0) so max is N-1
         return geometry;
     }

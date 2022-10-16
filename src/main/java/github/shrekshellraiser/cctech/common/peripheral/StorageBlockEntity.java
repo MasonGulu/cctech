@@ -46,6 +46,8 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
     protected boolean dataChanged = false;
     protected String deviceDir;
 
+    protected IPeripheral peripheral;
+
     protected LazyOptional<IPeripheral> peripheralCap;
     protected LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     public StorageBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
@@ -95,6 +97,21 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
             setChanged(pLevel, pPos, pState);
         }
     }
+
+    @Override
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction direction) {
+        if (cap == CAPABILITY_PERIPHERAL) {
+            if (peripheralCap == null) {
+                peripheralCap = LazyOptional.of(() -> peripheral);
+            }
+            return peripheralCap.cast();
+        } else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return lazyItemHandler.cast();
+        }
+        return super.getCapability(cap, direction);
+    }
+
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
 //        for (int i = 0; i < itemHandler.getSlots(); i++) {

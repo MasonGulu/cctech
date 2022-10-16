@@ -5,6 +5,7 @@ import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
+import github.shrekshellraiser.cctech.common.peripheral.NoDeviceException;
 import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckPeripheral;
 import github.shrekshellraiser.cctech.server.FileManager;
@@ -35,10 +36,7 @@ import static github.shrekshellraiser.cctech.server.FileManager.POINTER_SIZE;
 
 public abstract class TapeBlockEntity extends StorageBlockEntity {
     protected byte[] data = new byte[2]; // data of cassette loaded
-    protected String uuid;
     protected int pointer;
-    protected boolean deviceInserted = false;
-    protected boolean dataChanged = false;
     protected String deviceDir;
 
     public TapeBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
@@ -52,9 +50,9 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
 
 
 
-    public String readChar() {
+    public String readChar() throws NoDeviceException {
         if (!deviceInserted)
-            return "";
+            throw new NoDeviceException();
         dataChanged = true;
         try {
             return String.valueOf((char) (data[(pointer++) + POINTER_SIZE] & 0xFF));
@@ -65,30 +63,30 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return "";
     }
 
-    public boolean seekRel(int offset) {
+    public int seekRel(int offset) throws NoDeviceException {
         if (!deviceInserted)
-            return false;
+            throw new NoDeviceException();
         dataChanged = true;
         pointer += offset;
         int target = pointer;
         pointer = Math.max(pointer, 0);
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
-        return pointer == target;
+        return offset - pointer;
     }
 
-    public boolean seekAbs(int target) {
+    public int seekAbs(int target) throws NoDeviceException {
         if (!deviceInserted)
-            return false;
+            throw new NoDeviceException();
         dataChanged = true;
         pointer = target;
         pointer = Math.max(pointer, 0);
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
-        return pointer == target;
+        return target - pointer;
     }
 
-    public boolean writeChar(char ch) {
+    public boolean writeChar(char ch) throws NoDeviceException {
         if (!deviceInserted)
-            return false;
+            throw new NoDeviceException();
         dataChanged = true;
         try {
             data[(pointer++) + POINTER_SIZE] = (byte) (ch & 0xFF);
@@ -98,20 +96,26 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
         return true;
     }
-    public boolean setLabel(String label) {
+    public boolean setLabel(String label) throws NoDeviceException {
         if (!deviceInserted)
-            return false;
+            throw new NoDeviceException();
         ItemStack item = itemHandler.getStackInSlot(0);
         ((StorageItem) item.getItem()).setLabel(item, label);
         return true;
     }
 
-    public boolean clearLabel() {
+    public boolean clearLabel() throws NoDeviceException {
         if (!deviceInserted)
-            return false;
+            throw new NoDeviceException();
         ItemStack item = itemHandler.getStackInSlot(0);
         ((StorageItem) item.getItem()).removeLabel(item);
         return true;
+    }
+
+    public int getSize() throws NoDeviceException {
+        if (!deviceInserted)
+            throw new NoDeviceException();
+        return data.length - POINTER_SIZE;
     }
 
     @Override

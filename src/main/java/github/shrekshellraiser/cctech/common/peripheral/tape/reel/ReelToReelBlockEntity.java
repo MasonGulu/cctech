@@ -26,6 +26,7 @@ import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
 
 public class ReelToReelBlockEntity extends TapeBlockEntity {
 
+
     @Override
     protected void itemRemoved(ItemStack item) {
         pointer = 0;
@@ -41,9 +42,9 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
     public ReelToReelBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.REEL_TO_REEL.get(), pWorldPosition, pBlockState);
         deviceDir = ReelItem.getDeviceDir();
+        peripheral = new ReelToReelPeripheral(this);
     }
 
-    protected ReelToReelPeripheral peripheral = new ReelToReelPeripheral(this);
 
     @Override
     public @NotNull Component getDisplayName() {
@@ -56,19 +57,7 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
         return new ReelToReelMenu(pContainerId, pPlayerInventory, this);
     }
 
-    @Override
-    @NotNull
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction direction) {
-        if (cap == CAPABILITY_PERIPHERAL) {
-            if (peripheralCap == null) {
-                peripheralCap = LazyOptional.of(() -> peripheral);
-            }
-            return peripheralCap.cast();
-        } else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return lazyItemHandler.cast();
-        }
-        return super.getCapability(cap, direction);
-    }
+
 
     @Override
     public void drops() {
