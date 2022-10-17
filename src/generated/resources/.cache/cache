@@ -1,0 +1,13 @@
+6f02f2b6d6197b0551b29608f6dcabee4897b49e assets/cctech/models/item/creative_cassette.json
+5d56b8d1a1240ec6da3ba45b179f3642af4e9070 assets/cctech/models/item/creative_reel.json
+e5e6e0c67831f4f8257a8c25d9a1f27d69bb8734 assets/cctech/models/item/diamond_cassette.json
+51946dba72fa184c758a685bc01634c27a9b8f90 assets/cctech/models/item/diamond_reel.json
+86a3656687e0ac87008a00fc4ea21930080316e7 assets/cctech/models/item/gold_cassette.json
+81a29571005d1ae02ab6313a3bc45c8cb0c8d9ea assets/cctech/models/item/gold_reel.json
+eb6e73782c9f08e3a42240f54e709223f4558cc3 assets/cctech/models/item/iron_cassette.json
+604610b1ea75b5be7cc4d739903c2905ec14b6b3 assets/cctech/models/item/iron_reel.json
+e9307b5fb951fd1f9b7457cc0c8739916ee94223 assets/cctech/models/item/tape.json
+bc00dc83ac32e66e4599c586ef842aa7639901e3 assets/cctech/models/item/tape_head.json
+97b16b68d35f9977878b80a6f1ffa126fb4f9291 data/cctech/loot_tables/blocks/cassette_deck.json
+f9db9715b8e3e9d5a4dea361d22f06e2dd8f4c5b data/cctech/loot_tables/blocks/reel_to_reel.json
+c5f207ae091ad4da39fcf3f164e1f97db08c56fe data/cctech/loot_tables/blocks/zip_drive.json

@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-public class BlockLootTables extends BlockLoot {
+public class ModBlockLootTables extends BlockLoot {
     @Override
     protected void addTables() {
         ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(this::dropSelf);
