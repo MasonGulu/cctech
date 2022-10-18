@@ -5,13 +5,13 @@ import github.shrekshellraiser.cctech.common.item.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, CCTech.MODID, existingFileHelper);
+
     }
 
     @Override
@@ -28,12 +28,14 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(ModItems.TAPE_HEAD.get());
         simpleItem(ModItems.TAPE.get());
+
+
     }
 
-    // Credit for this goes to TODO add name of tutorial video maker
-    private ItemModelBuilder simpleItem(Item item) {
-        return withExistingParent(item.getRegistryName().getPath(),
+    // Credit for this goes to https://www.youtube.com/c/TKaupenjoe
+    private void simpleItem(Item item) {
+        withExistingParent(item.getRegistryName().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(CCTech.MODID,"item/" + item.getRegistryName().getPath()));
+                new ResourceLocation(CCTech.MODID, "item/" + item.getRegistryName().getPath()));
     }
 }
