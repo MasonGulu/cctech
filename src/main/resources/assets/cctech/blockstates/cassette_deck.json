@@ -1,33 +1,33 @@
 {
   "variants": {
-    "facing=east,filled=false": {
+    "facing=east,open=false": {
       "model": "cctech:block/cassette_deck",
       "y": 90
     },
-    "facing=north,filled=false": {
+    "facing=north,open=false": {
       "model": "cctech:block/cassette_deck"
     },
-    "facing=south,filled=false": {
+    "facing=south,open=false": {
       "model": "cctech:block/cassette_deck",
       "y": 180
     },
-    "facing=west,filled=false": {
+    "facing=west,open=false": {
       "model": "cctech:block/cassette_deck",
       "y": 270
     },
-    "facing=east,filled=true": {
-      "model": "cctech:block/cassette_deck_filled",
+    "facing=east,open=true": {
+      "model": "cctech:block/cassette_deck_open",
       "y": 90
     },
-    "facing=north,filled=true": {
-      "model": "cctech:block/cassette_deck_filled"
+    "facing=north,open=true": {
+      "model": "cctech:block/cassette_deck_open"
     },
-    "facing=south,filled=true": {
-      "model": "cctech:block/cassette_deck_filled",
+    "facing=south,open=true": {
+      "model": "cctech:block/cassette_deck_open",
       "y": 180
     },
-    "facing=west,filled=true": {
-      "model": "cctech:block/cassette_deck_filled",
+    "facing=west,open=true": {
+      "model": "cctech:block/cassette_deck_open",
       "y": 270
     }
   }

@@ -1,5 +1,6 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape;
 
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
@@ -45,14 +46,24 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new CassetteDeckMenu(pContainerId, pPlayerInventory, this);
+        return null;
     }
 
 
-
-    public String readChar() throws NoDeviceException {
-        if (!deviceInserted)
+    protected void assertReady() throws LuaException {
+        if (!deviceInserted) {
             throw new NoDeviceException();
+        }
+    }
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
+    }
+
+    public String readChar() throws LuaException {
+        assertReady();
         dataChanged = true;
         try {
             return String.valueOf((char) (data[(pointer++) + POINTER_SIZE] & 0xFF));
@@ -63,9 +74,8 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return "";
     }
 
-    public int seekRel(int offset) throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public int seekRel(int offset) throws LuaException {
+        assertReady();
         dataChanged = true;
         pointer += offset;
         int target = pointer;
@@ -74,9 +84,8 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return offset - pointer;
     }
 
-    public int seekAbs(int target) throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public int seekAbs(int target) throws LuaException {
+        assertReady();
         dataChanged = true;
         pointer = target;
         pointer = Math.max(pointer, 0);
@@ -84,9 +93,8 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return target - pointer;
     }
 
-    public boolean writeChar(char ch) throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public boolean writeChar(char ch) throws LuaException {
+        assertReady();
         dataChanged = true;
         try {
             data[(pointer++) + POINTER_SIZE] = (byte) (ch & 0xFF);
@@ -96,25 +104,22 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
         return true;
     }
-    public boolean setLabel(String label) throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public boolean setLabel(String label) throws LuaException {
+        assertReady();
         ItemStack item = itemHandler.getStackInSlot(0);
         ((StorageItem) item.getItem()).setLabel(item, label);
         return true;
     }
 
-    public boolean clearLabel() throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public boolean clearLabel() throws LuaException {
+        assertReady();
         ItemStack item = itemHandler.getStackInSlot(0);
         ((StorageItem) item.getItem()).removeLabel(item);
         return true;
     }
 
-    public int getSize() throws NoDeviceException {
-        if (!deviceInserted)
-            throw new NoDeviceException();
+    public int getSize() throws LuaException {
+        assertReady();
         return data.length - POINTER_SIZE;
     }
 

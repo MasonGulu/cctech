@@ -31,8 +31,12 @@ public class TapeItem extends StorageItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         if (Screen.hasShiftDown()) {
-            String length = ((TapeItem) pStack.getItem()).getLength(pStack) + " / " + (((TapeItem) pStack.getItem()).maxLength);
-            pTooltipComponents.add(new TextComponent(length));
+            int curLength = ((TapeItem) pStack.getItem()).getLength(pStack);
+            int maxLength = ((TapeItem) pStack.getItem()).maxLength;
+            String dataLength = (curLength + " / " + maxLength + " bytes");
+            pTooltipComponents.add(new TextComponent(dataLength));
+            String audioLength = curLength/8000 + " / " + maxLength/8000 + " seconds";
+            pTooltipComponents.add(new TextComponent(audioLength));
         }
     }
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CassetteDeckPeripheral extends TapePeripheral {
+    // TODO add check for if door is open
     public CassetteDeckPeripheral(CassetteDeckBlockEntity tileEntity) {
         super(tileEntity);
     }

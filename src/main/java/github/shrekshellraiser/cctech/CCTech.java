@@ -9,6 +9,7 @@ import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckScreen;
 import github.shrekshellraiser.cctech.client.screen.ModMenuTypes;
 import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelScreen;
+import github.shrekshellraiser.cctech.common.network.ModMessages;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,11 +40,16 @@ public class CCTech {
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
+        eventBus.addListener(this::commonSetup);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CCTechCommonConfigs.SPEC,
                 "cctech-common.toml");
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        ModMessages.register();
     }
 
     private void setup(final FMLCommonSetupEvent event) {

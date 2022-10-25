@@ -1,9 +1,9 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape.cassette;
 
+import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.peripheral.StorageBlock;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,15 +16,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CasetteDeckBlock extends StorageBlock {
+public class CassetteDeckBlock extends StorageBlock {
 
-    public CasetteDeckBlock() {
+    public CassetteDeckBlock() {
         super(Properties.of(Material.METAL).strength(2f));
-        this.registerDefaultState(this.stateDefinition.any().setValue(FILLED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(OPEN, false));
     }
 
     @Override
@@ -53,8 +52,18 @@ public class CasetteDeckBlock extends StorageBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof CassetteDeckBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer) pPlayer), (CassetteDeckBlockEntity) entity, pPos);
+            if (entity instanceof CassetteDeckBlockEntity cassetteDeckBlockEntity) {
+//                NetworkHooks.openGui(((ServerPlayer) pPlayer), (CassetteDeckBlockEntity) entity, pPos);
+                // TODO add functionality
+                if (pPlayer.isShiftKeyDown()) {
+                    boolean isOpen = pState.getValue(ModProperties.OPEN);
+                    pState = pState.setValue(ModProperties.OPEN, !isOpen);
+                    pLevel.setBlock(pPos, pState, 3);
+                    pLevel.blockEntityChanged(pPos);
+                    pLevel.updateNeighbourForOutputSignal(pPos, pState.getBlock());
+                } else if (pState.getValue(ModProperties.OPEN)) {
+                    cassetteDeckBlockEntity.onRightClick(pLevel, pPlayer, pHand);
+                }
             } else {
                 throw new IllegalStateException("Clicked on a block that isn't the cassette deck but also is???");
             }

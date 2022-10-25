@@ -28,6 +28,5 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected ItemModelBuilder block(BlockItem blockItem) {
         return itemModels().withExistingParent(blockItem.getRegistryName().getPath(),
                 CCTech.MODID + ":block/" + blockItem.getBlock().getRegistryName().getPath());
-
     }
 }

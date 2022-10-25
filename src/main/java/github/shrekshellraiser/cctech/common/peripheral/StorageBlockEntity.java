@@ -2,20 +2,17 @@ package github.shrekshellraiser.cctech.common.peripheral;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
-import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
-import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
-import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckPeripheral;
+import github.shrekshellraiser.cctech.common.network.ModMessages;
+import github.shrekshellraiser.cctech.common.network.packet.ItemStackSyncS2CPacket;
 import github.shrekshellraiser.cctech.server.FileManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -34,10 +31,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
-import static github.shrekshellraiser.cctech.server.FileManager.POINTER_SIZE;
 
 public abstract class StorageBlockEntity extends BlockEntity implements MenuProvider {
     protected byte[] data = new byte[2]; // data of cassette loaded
@@ -49,16 +44,26 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
     protected IPeripheral peripheral;
 
     protected LazyOptional<IPeripheral> peripheralCap;
+
     protected LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
     public StorageBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
         deviceDir = CassetteItem.getDeviceDir();
     }
+
     public abstract AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer);
+
     protected final ItemStackHandler itemHandler = createItemHandler();
+
     public Item getItem() {
         return itemHandler.getStackInSlot(0).getItem();
     }
+
+    public ItemStack getRenderStack() {
+        return itemHandler.getStackInSlot(0);
+    }
+
     protected ItemStackHandler createItemHandler() {
         return new ItemStackHandler(1) {
             @Override
@@ -72,6 +77,7 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
                     } else if ((uuid != null) && deviceInserted) {
                         itemRemoved(item);
                     }
+                    ModMessages.sendToClients(new ItemStackSyncS2CPacket(this, worldPosition));
                 }
             }
         };
@@ -90,12 +96,12 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
     public abstract @NotNull Component getDisplayName();
     public static void tick(Level pLevel, BlockPos pPos, @NotNull BlockState pState, @NotNull StorageBlockEntity pBlockEntity) {
         boolean hasTape = pBlockEntity.getItem() instanceof StorageItem;
-        if (hasTape != pState.getValue(ModProperties.FILLED)) {
-            CCTech.LOGGER.debug("State of storage device changed");
-            pState = pState.setValue(ModProperties.FILLED, hasTape);
-            pLevel.setBlock(pPos, pState, 3);
-            setChanged(pLevel, pPos, pState);
-        }
+//        if (hasTape != pState.getValue(ModProperties.OPEN)) {
+//            CCTech.LOGGER.debug("State of storage device changed");
+//            pState = pState.setValue(ModProperties.OPEN, hasTape);
+//            pLevel.setBlock(pPos, pState, 3);
+//            setChanged(pLevel, pPos, pState);
+//        }
     }
 
     @Override
