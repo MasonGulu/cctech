@@ -46,7 +46,7 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new CassetteDeckMenu(pContainerId, pPlayerInventory, this);
+        return null;// new CassetteDeckMenu(pContainerId, pPlayerInventory, this);
     }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CassetteDeckBlockEntity pBlockEntity) {

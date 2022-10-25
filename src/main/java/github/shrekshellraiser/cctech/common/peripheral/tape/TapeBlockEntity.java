@@ -1,38 +1,29 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape;
 
+import dan200.computercraft.api.lua.ILuaCallback;
 import dan200.computercraft.api.lua.LuaException;
-import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
+import dan200.computercraft.api.lua.LuaFunction;
+import dan200.computercraft.api.lua.MethodResult;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
 import github.shrekshellraiser.cctech.common.peripheral.NoDeviceException;
 import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
-import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckPeripheral;
 import github.shrekshellraiser.cctech.server.FileManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Timer;
+
 import static github.shrekshellraiser.cctech.server.FileManager.POINTER_SIZE;
 
 public abstract class TapeBlockEntity extends StorageBlockEntity {
@@ -50,6 +41,7 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
     }
 
 
+
     protected void assertReady() throws LuaException {
         if (!deviceInserted) {
             throw new NoDeviceException();
@@ -62,26 +54,29 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
     }
 
-    public String readChar() throws LuaException {
+    public String readData(int amount) throws LuaException {
         assertReady();
         dataChanged = true;
+        byte[] chars = new byte[amount];
         try {
-            return String.valueOf((char) (data[(pointer++) + POINTER_SIZE] & 0xFF));
+            System.arraycopy(data, pointer+POINTER_SIZE, chars, 0, amount);
+            pointer += amount;
         } catch (IndexOutOfBoundsException e) {
             pointer = Math.max(pointer, 0);
             pointer = Math.min(pointer, data.length - POINTER_SIZE);
+            throw new LuaException("Attempt to read past tape end.");
         }
-        return "";
+        return new String(chars);
     }
 
     public int seekRel(int offset) throws LuaException {
         assertReady();
         dataChanged = true;
+        int startingPointer = pointer;
         pointer += offset;
-        int target = pointer;
         pointer = Math.max(pointer, 0);
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
-        return offset - pointer;
+        return pointer - startingPointer;
     }
 
     public int seekAbs(int target) throws LuaException {
@@ -93,11 +88,13 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return target - pointer;
     }
 
-    public boolean writeChar(char ch) throws LuaException {
+    public boolean write(String str) throws LuaException {
         assertReady();
+        byte[] chars = str.getBytes(StandardCharsets.UTF_8);
         dataChanged = true;
         try {
-            data[(pointer++) + POINTER_SIZE] = (byte) (ch & 0xFF);
+            System.arraycopy(chars, 0, data, pointer+POINTER_SIZE, str.length());
+            pointer = pointer + str.length();
         } catch (ArrayIndexOutOfBoundsException e) {
             pointer = data.length - POINTER_SIZE;
             return false;
@@ -133,6 +130,7 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
     protected void saveData(ItemStack item) {
         FileManager.saveData(data, pointer, deviceDir, uuid);
     }
+
 
 
 }

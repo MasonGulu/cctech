@@ -14,6 +14,14 @@ local function printHelp()
   print("size")
 end
 
+local function protectedRead()
+  local stat, v = pcall(drive.read(1))
+  if stat then
+    return v
+  end
+  return ""
+end
+
 local function seek(target)
   if drive.seekAbs then
     drive.seekAbs(tonumber(target))
@@ -30,7 +38,7 @@ local function findNextHeader()
   local distance = 0
   while FFCount < 10 do -- look for 10 FF bytes in a row
     distance = distance + 1 -- just keep track of distance to occasionally yield
-    local char = drive.read(1)
+    local char = protectedRead()
     if char == "\xff" then
       FFCount = FFCount + 1
     elseif char == "" then
