@@ -6,12 +6,13 @@ public class CCTechCommonConfigs {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
-    public static final ForgeConfigSpec.DoubleValue CASSETTE_TIME_PER_BYTE;
+    public static final ForgeConfigSpec.ConfigValue<Integer> CASSETTE_BYTES_PER_SECOND;
     public static final ForgeConfigSpec.ConfigValue<Integer> IRON_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> GOLD_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> DIAMOND_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> CREATIVE_CASSETTE;
 
+    public static final ForgeConfigSpec.ConfigValue<Integer> REEL_BYTES_PER_SECOND;
     public static final ForgeConfigSpec.ConfigValue<Integer> IRON_REEL;
     public static final ForgeConfigSpec.ConfigValue<Integer> GOLD_REEL;
     public static final ForgeConfigSpec.ConfigValue<Integer> DIAMOND_REEL;
@@ -23,7 +24,7 @@ public class CCTechCommonConfigs {
         final int MAX_SIZE = 2147483647;
         BUILDER.push("CCTech Config");
 
-        CASSETTE_TIME_PER_BYTE = BUILDER.defineInRange("Cassette Seek Time (ms/b): ", 0.16d, 0, 100);
+        CASSETTE_BYTES_PER_SECOND = BUILDER.defineInRange("Cassette Operation Time (Bps): ", 6000, 1, MAX_SIZE);
         // DFPWM is 6,000 bytes per second
         // 360,000 bytes per minute
         IRON_CASSETTE = BUILDER.defineInRange("Iron Cassette Size", 360000*2, 1, MAX_SIZE);
@@ -35,6 +36,7 @@ public class CCTechCommonConfigs {
 
         TAPE_SIZE = BUILDER.defineInRange("Magnetic Tape Size", 60000, 1, MAX_SIZE);
 
+        REEL_BYTES_PER_SECOND = BUILDER.defineInRange("Reel Operation Time (Bps): ", 12000, 1, MAX_SIZE);
         IRON_REEL = BUILDER.defineInRange("Iron Reel Size", 360000*4, 1, MAX_SIZE);
         GOLD_REEL = BUILDER.defineInRange("Gold Reel Size", 360000*8, 1, MAX_SIZE);
         DIAMOND_REEL = BUILDER.defineInRange("Diamond Reel Size", 360000*16, 1, MAX_SIZE);

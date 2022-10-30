@@ -33,7 +33,7 @@ public abstract class TapePeripheral implements IPeripheral {
                     computer.queueEvent("cassette_finished", val);
                 }
             }
-        }, Math.abs(delay));
+        }, 0*Math.abs(delay));
     }
 
     @Override
@@ -57,26 +57,22 @@ public abstract class TapePeripheral implements IPeripheral {
     }
 
     @LuaFunction
-    public final MethodResult read(Optional<Integer> targetChars) throws LuaException {
+    public final MethodResult read(IComputerAccess computerAccess, Optional<Integer> targetChars) throws LuaException {
         int characters = targetChars.orElse(1);
         if (characters < 1) {
             throw new LuaException("Cannot read <1 bytes.");
         }
-        startEventTimer(tileEntity.readData(characters), (long) (characters * CCTechCommonConfigs.CASSETTE_TIME_PER_BYTE.get()));
-        return new TapeFinished().methodResult;
+        return tileEntity.readData(computerAccess, characters);
     }
 
     @LuaFunction
-    public final MethodResult write(String ch) throws LuaException {
-        tileEntity.write(ch);
-        startEventTimer(true, (long) (ch.length() * CCTechCommonConfigs.CASSETTE_TIME_PER_BYTE.get()));
-        return new TapeFinished().methodResult;
+    public final MethodResult write(IComputerAccess computerAccess, String ch) throws LuaException {
+        return tileEntity.write(computerAccess, ch);
     }
 
     @LuaFunction
-    public final MethodResult seek(int offset) throws LuaException {
-        startEventTimer(tileEntity.seekRel(offset), (long) (offset * CCTechCommonConfigs.CASSETTE_TIME_PER_BYTE.get() / 4));
-        return new TapeFinished().methodResult;
+    public final MethodResult seek(IComputerAccess computerAccess, int offset) throws LuaException {
+        return tileEntity.seekRel(computerAccess, offset);
     }
 
     @LuaFunction
@@ -93,21 +89,26 @@ public abstract class TapePeripheral implements IPeripheral {
     public final int getSize() throws LuaException {
         return tileEntity.getSize();
     }
-
-    private static final class TapeFinished implements ILuaCallback {
-        MethodResult methodResult = MethodResult.pullEvent("cassette_finished", this);
-        /**
-         * Resume this coroutine.
-         *
-         * @param args The result of resuming this coroutine. These will have the same form as described in
-         *             {@link LuaFunction}.
-         * @return The result of this continuation. Either the result to return to the callee, or another yield.
-         * @throws LuaException On an error.
-         */
-        @NotNull
-        @Override
-        public MethodResult resume(Object[] args) throws LuaException {
-            return MethodResult.of(args[1]);
-        }
-    }
+//
+//    private final class TapeFinished implements ILuaCallback {
+//        MethodResult methodResult = MethodResult.pullEvent(null, this);
+//        /**
+//         * Resume this coroutine.
+//         *
+//         * @param args The result of resuming this coroutine. These will have the same form as described in
+//         *             {@link LuaFunction}.
+//         * @return The result of this continuation. Either the result to return to the callee, or another yield.
+//         * @throws LuaException On an error.
+//         */
+//        @NotNull
+//        @Override
+//        public MethodResult resume(Object[] args) throws LuaException {
+//            boolean cassetteFinished = "cassette_finished".equals(args[0]);
+//            if (cassetteFinished) {
+//                return MethodResult.of(args[1]);
+//            }
+//            tileEntity.assertReady();
+//            return MethodResult.pullEvent(null, this);
+//        }
+//    }
 }

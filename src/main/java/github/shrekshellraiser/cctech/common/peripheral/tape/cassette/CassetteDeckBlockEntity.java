@@ -31,7 +31,7 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
     }
 
     @Override
-    protected void assertReady() throws LuaException {
+    public void assertReady() throws LuaException {
         if (getBlockState().getValue(ModProperties.OPEN)) {
             throw new LuaException("Door open");
         }
@@ -47,16 +47,6 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return null;// new CassetteDeckMenu(pContainerId, pPlayerInventory, this);
-    }
-
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CassetteDeckBlockEntity pBlockEntity) {
-//        boolean hasTape = pBlockEntity.getItem() instanceof CassetteItem;
-//        if (hasTape != pState.getValue(ModProperties.OPEN)) {
-//            CCTech.LOGGER.debug("State of cassette deck changed");
-//            pState = pState.setValue(ModProperties.OPEN, hasTape);
-//            pLevel.setBlock(pPos, pState, 3);
-//            setChanged(pLevel, pPos, pState);
-//        }
     }
 
     public void onRightClick(Level pLevel, Player pPlayer, InteractionHand pHand) {

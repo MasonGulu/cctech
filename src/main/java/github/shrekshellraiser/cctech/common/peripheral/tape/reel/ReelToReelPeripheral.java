@@ -2,6 +2,7 @@ package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
+import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
@@ -28,12 +29,8 @@ public class ReelToReelPeripheral extends TapePeripheral {
     }
 
     @LuaFunction
-    public final int seekAbs(int loc) throws LuaException {
-        try {
-            return tileEntity.seekAbs(loc);
-        } catch(NoDeviceException e) {
-            throw new LuaException("No tape in drive");
-        }
+    public final MethodResult seekAbs(IComputerAccess computerAccess, int loc) throws LuaException {
+        return tileEntity.seekAbs(computerAccess, loc);
     }
 
     @LuaFunction
