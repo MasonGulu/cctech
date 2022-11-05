@@ -3,6 +3,7 @@ package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
 import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
@@ -43,6 +44,7 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
         super(ModBlockEntities.REEL_TO_REEL.get(), pWorldPosition, pBlockState);
         deviceDir = ReelItem.getDeviceDir();
         peripheral = new ReelToReelPeripheral(this);
+        ticksPerByte = 1.0 / (CCTechCommonConfigs.REEL_BYTES_PER_SECOND.get() / 20.0);
     }
 
 

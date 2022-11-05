@@ -1,5 +1,6 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape;
 
+import cc.tweaked.internal.cobalt.Lua;
 import dan200.computercraft.api.lua.ILuaCallback;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
@@ -25,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
-import java.util.Queue;
 
 import static github.shrekshellraiser.cctech.server.FileManager.POINTER_SIZE;
 
@@ -59,6 +59,15 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
     }
 
+    private MethodResult syncQueue(Object value, String eventName, int ticks, IComputerAccess computerAccess) throws LuaException {
+        if (ticks < 1) {
+            assertReady();
+            return MethodResult.of(value);
+        }
+        eventQueue.add(new QueueItem(value, eventName, ticks, computerAccess));
+        return new EventFinished(eventName).getMethodResult();
+    }
+
     // TODO method result
     public MethodResult readData(IComputerAccess computerAccess, int amount) throws LuaException {
         assertReady();
@@ -72,9 +81,8 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
             pointer = Math.min(pointer, data.length - POINTER_SIZE);
             throw new LuaException("Attempt to read past tape end.");
         }
-        eventQueue.add(new QueueItem(new String(chars, StandardCharsets.ISO_8859_1), "tape_read",
-                (int) (ticksPerByte * amount), computerAccess));
-        return new EventFinished("tape_read").getMethodResult();
+        return syncQueue(new String(chars, StandardCharsets.ISO_8859_1), "tape_read",
+                (int) (ticksPerByte * amount), computerAccess);
     }
 
     // TODO method result
@@ -87,8 +95,7 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
 
         int distanceMoved = pointer - startingPointer;
-        eventQueue.add(new QueueItem(distanceMoved, "tape_seek", distanceMoved, computerAccess));
-        return new EventFinished("tape_seek").getMethodResult();
+        return syncQueue(distanceMoved, "tape_seek", (int)(distanceMoved * ticksPerByte), computerAccess);
     }
 
     // TODO method result
@@ -100,9 +107,8 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
 
         int distanceMoved = target - pointer;
-        eventQueue.add(new QueueItem(distanceMoved, "tape_seek",
-                (int) (ticksPerByte * distanceMoved), computerAccess));
-        return new EventFinished("tape_seek").getMethodResult();
+        return syncQueue(distanceMoved, "tape_seek",
+                (int) (ticksPerByte * distanceMoved), computerAccess);
     }
 
     // TODO method result
@@ -119,9 +125,9 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
         System.arraycopy(chars, 0, data, pointer+POINTER_SIZE, str.length());
         pointer += str.length();
-        eventQueue.add(new QueueItem(true, "tape_write",
-                (int) (ticksPerByte * str.length()), computerAccess));
-        return new EventFinished("tape_write").getMethodResult();
+        return syncQueue(true, "tape_write",
+                (int) (ticksPerByte * str.length()), computerAccess);
+
     }
 
     public boolean setLabel(String label) throws LuaException {
@@ -161,7 +167,7 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
 
     protected int timer;
 
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CassetteDeckBlockEntity pBlockEntity) {
+    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, TapeBlockEntity pBlockEntity) {
         switch (pBlockEntity.queueState) {
             case FREE -> {
                 while (!pBlockEntity.eventQueue.isEmpty() && pBlockEntity.queueState == QueueState.FREE) {

@@ -4,6 +4,7 @@ import dan200.computercraft.api.lua.LuaException;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
 import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
@@ -28,6 +29,7 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
         super(ModBlockEntities.CASSETTE_DECK.get(), pWorldPosition, pBlockState);
         deviceDir = CassetteItem.getDeviceDir();
         peripheral = new CassetteDeckPeripheral(this);
+        ticksPerByte = 1.0 / (CCTechCommonConfigs.CASSETTE_BYTES_PER_SECOND.get() / 20.0);
     }
 
     @Override
