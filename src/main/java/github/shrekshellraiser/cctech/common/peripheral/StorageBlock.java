@@ -17,11 +17,11 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public abstract class StorageBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final BooleanProperty FILLED = ModProperties.FILLED;
+    public static final BooleanProperty OPEN = ModProperties.OPEN;
 
     public StorageBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FILLED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, false));
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class StorageBlock extends BaseEntityBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, FILLED);
+        pBuilder.add(FACING, OPEN);
     }
 
     public BlockState rotate(BlockState pState, Rotation pRotation) {

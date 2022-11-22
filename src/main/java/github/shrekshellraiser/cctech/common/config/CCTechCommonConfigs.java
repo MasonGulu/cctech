@@ -6,11 +6,13 @@ public class CCTechCommonConfigs {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 
+    public static final ForgeConfigSpec.ConfigValue<Integer> CASSETTE_BYTES_PER_SECOND;
     public static final ForgeConfigSpec.ConfigValue<Integer> IRON_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> GOLD_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> DIAMOND_CASSETTE;
     public static final ForgeConfigSpec.ConfigValue<Integer> CREATIVE_CASSETTE;
 
+    public static final ForgeConfigSpec.ConfigValue<Integer> REEL_BYTES_PER_SECOND;
     public static final ForgeConfigSpec.ConfigValue<Integer> IRON_REEL;
     public static final ForgeConfigSpec.ConfigValue<Integer> GOLD_REEL;
     public static final ForgeConfigSpec.ConfigValue<Integer> DIAMOND_REEL;
@@ -22,19 +24,23 @@ public class CCTechCommonConfigs {
         final int MAX_SIZE = 2147483647;
         BUILDER.push("CCTech Config");
 
-        IRON_CASSETTE = BUILDER.defineInRange("Iron Cassette Size", 160000, 1, MAX_SIZE);
-        GOLD_CASSETTE = BUILDER.defineInRange("Gold Cassette Size", 320000, 1, MAX_SIZE);
-        DIAMOND_CASSETTE = BUILDER.defineInRange("Diamond Cassette Size", 640000, 1, MAX_SIZE);
-        CREATIVE_CASSETTE = BUILDER.defineInRange("Creative Cassette Size", 1280000, 1, MAX_SIZE);
+        CASSETTE_BYTES_PER_SECOND = BUILDER.defineInRange("Cassette Operation Time (Bps): ", 10000, 1, MAX_SIZE);
+        // DFPWM is 6,000 bytes per second
+        // 360,000 bytes per minute
+        IRON_CASSETTE = BUILDER.defineInRange("Iron Cassette Size", 360000*2, 1, MAX_SIZE);
+        GOLD_CASSETTE = BUILDER.defineInRange("Gold Cassette Size", 360000*4, 1, MAX_SIZE);
+        DIAMOND_CASSETTE = BUILDER.defineInRange("Diamond Cassette Size", 360000*8, 1, MAX_SIZE);
+        CREATIVE_CASSETTE = BUILDER.defineInRange("Creative Cassette Size", 360000*60, 1, MAX_SIZE);
 
-        CASSETTE_DEFAULT = BUILDER.defineInRange("Cassette Default Size", 64000, 1, MAX_SIZE);
+        CASSETTE_DEFAULT = BUILDER.defineInRange("Cassette Default Size", 360000, 1, MAX_SIZE);
 
-        TAPE_SIZE = BUILDER.defineInRange("Magnetic Tape Size", 64000, 1, MAX_SIZE);
+        TAPE_SIZE = BUILDER.defineInRange("Magnetic Tape Size", 60000, 1, MAX_SIZE);
 
-        IRON_REEL = BUILDER.defineInRange("Iron Reel Size", 320000, 1, MAX_SIZE);
-        GOLD_REEL = BUILDER.defineInRange("Gold Reel Size", 640000, 1, MAX_SIZE);
-        DIAMOND_REEL = BUILDER.defineInRange("Diamond Reel Size", 1280000, 1, MAX_SIZE);
-        CREATIVE_REEL = BUILDER.defineInRange("Creative Reel Size", 2560000, 1, MAX_SIZE);
+        REEL_BYTES_PER_SECOND = BUILDER.defineInRange("Reel Operation Time (Bps): ", 20000, 1, MAX_SIZE);
+        IRON_REEL = BUILDER.defineInRange("Iron Reel Size", 360000*4, 1, MAX_SIZE);
+        GOLD_REEL = BUILDER.defineInRange("Gold Reel Size", 360000*8, 1, MAX_SIZE);
+        DIAMOND_REEL = BUILDER.defineInRange("Diamond Reel Size", 360000*16, 1, MAX_SIZE);
+        CREATIVE_REEL = BUILDER.defineInRange("Creative Reel Size", 360000*128, 1, MAX_SIZE);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

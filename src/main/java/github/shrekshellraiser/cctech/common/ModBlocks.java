@@ -1,9 +1,8 @@
 package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
 import github.shrekshellraiser.cctech.common.peripheral.sectormedia.zip.ZipDriveBlock;
-import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CasetteDeckBlock;
+import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlock;
 import github.shrekshellraiser.cctech.common.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -22,7 +21,7 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, CCTech.MODID);
 
     public static final RegistryObject<Block> CASSETTE_DECK = registerBlock("cassette_deck",
-            CasetteDeckBlock::new, ModCreativeModeTab.CCTECH_TAB);
+            CassetteDeckBlock::new, ModCreativeModeTab.CCTECH_TAB);
 
     public static final RegistryObject<Block> REEL_TO_REEL = registerBlock("reel_to_reel",
             ReelToReelBlock::new, ModCreativeModeTab.CCTECH_TAB);

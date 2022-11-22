@@ -1,24 +1,32 @@
 local drive = peripheral.find("cassette_deck") or peripheral.find("reel_to_reel")
 assert(drive, "No cassette deck or reel to reel connected!")
 
+local arg = {...}
+
 local function printHelp()
   print("Usage: ")
-  print("load tapefilename [diskfilename]")
-  print("save diskfilename [tapefilename]")
-  print("delete tapefilename")
+  print("load tapefn [diskfn]")
+  print("save diskfn [tapefn]")
+  print("delete tape-filename")
   print("seek target")
   print("list")
   print("wipe")
+  print("size")
+end
+
+local function protectedRead()
+  local stat, v = pcall(drive.read(1))
+  if stat then
+    return v
+  end
+  return ""
 end
 
 local function seek(target)
   if drive.seekAbs then
     drive.seekAbs(tonumber(target))
   else
-    while drive.seek(-100000) do
-      -- seek to beginning
-      sleep(0) -- yield so we don't crash
-    end
+    drive.seek(-drive.getSize())
     drive.seek(target) -- seek to destination
   end
 end
@@ -30,7 +38,7 @@ local function findNextHeader()
   local distance = 0
   while FFCount < 10 do -- look for 10 FF bytes in a row
     distance = distance + 1 -- just keep track of distance to occasionally yield
-    local char = drive.read(1)
+    local char = protectedRead()
     if char == "\xff" then
       FFCount = FFCount + 1
     elseif char == "" then
@@ -70,7 +78,6 @@ local function findNextFile()
   until lastChar == "\0" -- null terminated filename
   -- we have the filename now
   local byteString = drive.read(4)
----@diagnostic disable-next-line: deprecated
   local length = string.unpack("<I4", byteString) -- convert 4 characters to a 4 byte unsigned int
   return filename, length
 end
@@ -137,7 +144,7 @@ local function main()
     assert(f, e)
     local str = f.readAll() -- read whole file into a string
     local len = str:len()
-    findEmptySpace(len) -- find an empty space on the tape large enough for this file
+    findEmptySpace(10+4+#arg[3]+1+len) -- find an empty space on the tape large enough for this file
 
     drive.write(string.rep("\xff", 10)) -- write the 10 byte lead-in
     drive.write(arg[3]) -- tape filename
@@ -166,27 +173,44 @@ local function main()
 
   elseif arg[1] == "list" then
     seek(0)
-    local name, len
+    local used = 0
     repeat
-      name, len = findNextFile()
+      local name, len = findNextFile()
       if (name ~= nil) then
         drive.seek(len) -- skip past this file
-        print(name)
+        print(name, len)
+        used = used + len
+        used = used + 14 -- 10 bytes FF + 4 bytes file length
+        used = used + #name + 1 -- null terminated filename
       end
     until name == nil
+    print(used, "used of", drive.getSize())
 
   elseif arg[1] == "wipe" then
     term.write("Are you sure (y/n)? ")
     local selection = read():lower()
     if selection == "y" then
+      local size = drive.getSize()
+      local n = 0
+      term.write(("%8u / %u bytes wiped."):format(n, size))
       seek(0)
-      local i = 0
-      while drive.write(string.rep("\0", 10000)) do
+      local dataWipeSize = 10000
+      while drive.write(string.rep("\0", dataWipeSize)) do
+        n = math.min(n + dataWipeSize, size)
+        local x, y = term.getCursorPos()
+        term.clearLine()
+        term.setCursorPos(1, y)
+        term.write(("%8u / %u bytes wiped."):format(n, size))
+        if (n == size) then
+          break
+        end
+
         sleep(0) -- yield
       end
-    else
-      print("User cancelled")
+      print()
     end
+  elseif arg[1] == "size" then
+    print(drive.getSize())
   else
     printHelp()
   end
