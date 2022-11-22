@@ -3,6 +3,7 @@ package github.shrekshellraiser.cctech.client;
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntityRenderer;
+import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,6 +17,8 @@ public class ClientEvents {
         public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.CASSETTE_DECK.get(),
                     CassetteDeckBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.REEL_TO_REEL.get(),
+                    ReelToReelBlockEntityRenderer::new);
         }
     }
 }

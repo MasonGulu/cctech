@@ -11,6 +11,8 @@ import github.shrekshellraiser.cctech.client.screen.ModMenuTypes;
 import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelScreen;
 import github.shrekshellraiser.cctech.common.network.ModMessages;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -58,8 +60,9 @@ public class CCTech {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        MenuScreens.register(ModMenuTypes.CASSETTE_DECK.get(), CassetteDeckScreen::new);
-        MenuScreens.register(ModMenuTypes.REEL_TO_REEL.get(), ReelToReelScreen::new);
+//        MenuScreens.register(ModMenuTypes.CASSETTE_DECK.get(), CassetteDeckScreen::new);
+//        MenuScreens.register(ModMenuTypes.REEL_TO_REEL.get(), ReelToReelScreen::new);
         MenuScreens.register(ModMenuTypes.ZIP_DRIVE.get(), ZipDriveScreen::new);
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.REEL_TO_REEL.get(), RenderType.cutout());
     }
 }

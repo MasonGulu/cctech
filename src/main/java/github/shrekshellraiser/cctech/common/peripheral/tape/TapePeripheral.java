@@ -57,22 +57,22 @@ public abstract class TapePeripheral implements IPeripheral {
     }
 
     @LuaFunction
-    public final MethodResult read(IComputerAccess computerAccess, Optional<Integer> targetChars) throws LuaException {
+    public final MethodResult read(IComputerAccess computerAccess, Optional<Integer> targetChars, Optional<Boolean> async) throws LuaException {
         int characters = targetChars.orElse(1);
         if (characters < 1) {
             throw new LuaException("Cannot read <1 bytes.");
         }
-        return tileEntity.readData(computerAccess, characters);
+        return tileEntity.readData(computerAccess, characters, async.orElse(false));
     }
 
     @LuaFunction
-    public final MethodResult write(IComputerAccess computerAccess, String ch) throws LuaException {
-        return tileEntity.write(computerAccess, ch);
+    public final MethodResult write(IComputerAccess computerAccess, String ch, Optional<Boolean> async) throws LuaException {
+        return tileEntity.write(computerAccess, ch, async.orElse(false));
     }
 
     @LuaFunction
-    public final MethodResult seek(IComputerAccess computerAccess, int offset) throws LuaException {
-        return tileEntity.seekRel(computerAccess, offset);
+    public final MethodResult seek(IComputerAccess computerAccess, int offset, Optional<Boolean> async) throws LuaException {
+        return tileEntity.seekRel(computerAccess, offset, async.orElse(false));
     }
 
     @LuaFunction

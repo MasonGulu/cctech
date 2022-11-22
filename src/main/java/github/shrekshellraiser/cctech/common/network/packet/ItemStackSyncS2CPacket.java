@@ -1,5 +1,7 @@
 package github.shrekshellraiser.cctech.common.network.packet;
 
+import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
+import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -45,7 +47,7 @@ public class ItemStackSyncS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof CassetteDeckBlockEntity blockEntity) {
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof TapeBlockEntity blockEntity) {
                 blockEntity.setHandler(this.itemStackHandler);
             }
         });

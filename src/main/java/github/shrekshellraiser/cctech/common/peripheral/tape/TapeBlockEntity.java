@@ -13,6 +13,8 @@ import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
 import github.shrekshellraiser.cctech.server.FileManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -60,16 +62,16 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
     }
 
     private MethodResult syncQueue(Object value, String eventName, int ticks, IComputerAccess computerAccess) throws LuaException {
-        if (ticks < 1) {
-            assertReady();
-            return MethodResult.of(value);
-        }
+//        if (ticks < 1) {
+//            assertReady();
+//            return MethodResult.of(value);
+//        }
         eventQueue.add(new QueueItem(value, eventName, ticks, computerAccess));
         return new EventFinished(eventName).getMethodResult();
     }
 
     // TODO method result
-    public MethodResult readData(IComputerAccess computerAccess, int amount) throws LuaException {
+    public MethodResult readData(IComputerAccess computerAccess, int amount, boolean async) throws LuaException {
         assertReady();
         dataChanged = true;
         byte[] chars = new byte[amount];
@@ -81,12 +83,16 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
             pointer = Math.min(pointer, data.length - POINTER_SIZE);
             throw new LuaException("Attempt to read past tape end.");
         }
-        return syncQueue(new String(chars, StandardCharsets.ISO_8859_1), "tape_read",
+        var event = syncQueue(new String(chars, StandardCharsets.ISO_8859_1), "tape_read",
                 (int) (ticksPerByte * amount), computerAccess);
+        if (async) {
+            return MethodResult.of(true);
+        }
+        return event;
     }
 
     // TODO method result
-    public MethodResult seekRel(IComputerAccess computerAccess, int offset) throws LuaException {
+    public MethodResult seekRel(IComputerAccess computerAccess, int offset, boolean async) throws LuaException {
         assertReady();
         dataChanged = true;
         int startingPointer = pointer;
@@ -95,24 +101,33 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
 
         int distanceMoved = pointer - startingPointer;
-        return syncQueue(distanceMoved, "tape_seek", (int)(distanceMoved * ticksPerByte), computerAccess);
+        var event = syncQueue(distanceMoved, "tape_seek", (int)(distanceMoved * ticksPerByte), computerAccess);
+        if (async) {
+            return MethodResult.of(true);
+        }
+        return event;
     }
 
     // TODO method result
-    public MethodResult seekAbs(IComputerAccess computerAccess, int target) throws LuaException {
+    public MethodResult seekAbs(IComputerAccess computerAccess, int target, boolean async) throws LuaException {
         assertReady();
         dataChanged = true;
+        int oldPos = pointer;
         pointer = target;
         pointer = Math.max(pointer, 0);
         pointer = Math.min(pointer, data.length - POINTER_SIZE);
 
-        int distanceMoved = target - pointer;
-        return syncQueue(distanceMoved, "tape_seek",
+        int distanceMoved = pointer - oldPos;
+        var event = syncQueue(distanceMoved, "tape_seek",
                 (int) (ticksPerByte * distanceMoved), computerAccess);
+        if (async) {
+            return MethodResult.of(true);
+        }
+        return event;
     }
 
     // TODO method result
-    public MethodResult write(IComputerAccess computerAccess, String str) throws LuaException {
+    public MethodResult write(IComputerAccess computerAccess, String str, boolean async) throws LuaException {
         assertReady();
         byte[] chars = str.getBytes(StandardCharsets.ISO_8859_1);
         dataChanged = true;
@@ -125,8 +140,12 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         }
         System.arraycopy(chars, 0, data, pointer+POINTER_SIZE, str.length());
         pointer += str.length();
-        return syncQueue(true, "tape_write",
+        var event = syncQueue(true, "tape_write",
                 (int) (ticksPerByte * str.length()), computerAccess);
+        if (async) {
+            return MethodResult.of(true);
+        }
+        return event;
 
     }
 

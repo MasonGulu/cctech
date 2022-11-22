@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "top": "computercraft:block/disk_drive_top",
-    "front": "cctech:block/cassette_deck",
-    "side": "computercraft:block/disk_drive_side"
-  }
-}
