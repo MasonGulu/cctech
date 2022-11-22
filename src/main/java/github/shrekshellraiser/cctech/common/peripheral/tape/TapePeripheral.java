@@ -1,14 +1,11 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape;
 
-import dan200.computercraft.api.lua.ILuaCallback;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -33,7 +30,7 @@ public abstract class TapePeripheral implements IPeripheral {
                     computer.queueEvent("cassette_finished", val);
                 }
             }
-        }, 0*Math.abs(delay));
+        }, 0L);
     }
 
     @Override

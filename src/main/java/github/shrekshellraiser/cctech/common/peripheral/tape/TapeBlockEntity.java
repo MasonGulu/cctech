@@ -1,6 +1,5 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape;
 
-import cc.tweaked.internal.cobalt.Lua;
 import dan200.computercraft.api.lua.ILuaCallback;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
@@ -10,11 +9,8 @@ import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
 import github.shrekshellraiser.cctech.common.peripheral.NoDeviceException;
 import github.shrekshellraiser.cctech.common.peripheral.StorageBlockEntity;
-import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
 import github.shrekshellraiser.cctech.server.FileManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
