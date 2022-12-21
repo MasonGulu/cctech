@@ -13,6 +13,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -21,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
 
-public abstract class StorageBlockEntity extends BlockEntity implements MenuProvider {
+public abstract class StorageBlockEntity extends BlockEntity {
     protected byte[] data = new byte[2]; // data of cassette loaded
     protected String uuid;
     protected boolean deviceInserted = false;
@@ -92,17 +93,6 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
         deviceInserted = false;
         uuid = null;
     }
-    @Override
-    public abstract @NotNull Component getDisplayName();
-    public static void tick(Level pLevel, BlockPos pPos, @NotNull BlockState pState, @NotNull StorageBlockEntity pBlockEntity) {
-        boolean hasTape = pBlockEntity.getItem() instanceof StorageItem;
-//        if (hasTape != pState.getValue(ModProperties.OPEN)) {
-//            CCTech.LOGGER.debug("State of storage device changed");
-//            pState = pState.setValue(ModProperties.OPEN, hasTape);
-//            pLevel.setBlock(pPos, pState, 3);
-//            setChanged(pLevel, pPos, pState);
-//        }
-    }
 
     @Override
     @NotNull
@@ -117,7 +107,6 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
         }
         return super.getCapability(cap, direction);
     }
-
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
 //        for (int i = 0; i < itemHandler.getSlots(); i++) {
@@ -154,6 +143,14 @@ public abstract class StorageBlockEntity extends BlockEntity implements MenuProv
             deviceInserted = true;
         }
     }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = new CompoundTag();
+        saveAdditional(nbt);
+        return nbt;
+    }
+
     @Override
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);

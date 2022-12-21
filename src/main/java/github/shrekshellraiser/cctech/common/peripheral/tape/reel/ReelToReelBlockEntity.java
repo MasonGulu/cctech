@@ -1,18 +1,12 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
 
 import dan200.computercraft.api.lua.LuaException;
-import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
-import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
-import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
-import github.shrekshellraiser.cctech.common.peripheral.NoDeviceException;
-import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
-import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
+import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -25,13 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static dan200.computercraft.shared.Capabilities.CAPABILITY_PERIPHERAL;
 
 public class ReelToReelBlockEntity extends TapeBlockEntity {
 
@@ -65,18 +54,6 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
         deviceDir = ReelItem.getDeviceDir();
         peripheral = new ReelToReelPeripheral(this);
         ticksPerByte = 1.0 / (CCTechCommonConfigs.REEL_BYTES_PER_SECOND.get() / 20.0);
-    }
-
-
-    @Override
-    public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("block.cctech.reel_to_reel");
-    }
-
-    @Nullable
-    @Override
-    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new ReelToReelMenu(pContainerId, pPlayerInventory, this);
     }
 
     public boolean setLock(boolean state) throws LuaException {

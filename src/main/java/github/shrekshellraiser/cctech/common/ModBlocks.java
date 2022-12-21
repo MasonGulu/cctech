@@ -1,7 +1,6 @@
 package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.peripheral.sectormedia.zip.ZipDriveBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlock;
 import github.shrekshellraiser.cctech.common.item.ModItems;
@@ -25,9 +24,6 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> REEL_TO_REEL = registerBlock("reel_to_reel",
             ReelToReelBlock::new, ModCreativeModeTab.CCTECH_TAB);
-
-    public static final RegistryObject<Block> ZIP_DRIVE = registerBlock("zip_drive",
-            ZipDriveBlock::new, ModCreativeModeTab.CCTECH_TAB);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

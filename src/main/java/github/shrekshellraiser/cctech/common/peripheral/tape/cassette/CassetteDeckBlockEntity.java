@@ -1,13 +1,11 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape.cassette;
 
 import dan200.computercraft.api.lua.LuaException;
-import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.peripheral.tape.TapeBlockEntity;
-import github.shrekshellraiser.cctech.client.screen.tape.CassetteDeckMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,11 +35,6 @@ public class CassetteDeckBlockEntity extends TapeBlockEntity {
             throw new LuaException("Door open");
         }
         super.assertReady();
-    }
-
-    @Override
-    public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("block.cctech.cassette_deck");
     }
 
     @Nullable
