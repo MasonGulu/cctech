@@ -12,6 +12,8 @@ local function printHelp()
   print("list")
   print("wipe")
   print("size")
+  print("lock")
+  print("unlock")
 end
 
 local function protectedRead()
@@ -118,8 +120,8 @@ local function findEmptySpace(size)
   end
 end
 
-local function main()
-  if arg[1] == "load" then
+local operations = {
+  load = function()
     if not arg[2] then
       printHelp()
       return
@@ -133,8 +135,9 @@ local function main()
     f.write(drive.read(len))
     f.close()
     print("File loaded")
-    
-  elseif arg[1] == "save" then
+
+  end,
+  save = function()
     if not arg[2] then
       printHelp()
       return
@@ -153,14 +156,18 @@ local function main()
     assert(drive.write(str), "End of tape reached") -- write data
 
     print("File written")
-  elseif arg[1] == "seek" then
+
+  end,
+  seek = function()
     if not tonumber(arg[2]) then
       printHelp()
       return
     end
     seek(tonumber(arg[2]))
     print("Seeked")
-  elseif arg[1] == "delete" then
+
+  end,
+  delete = function()
     if not arg[2] then
       printHelp()
       return
@@ -171,7 +178,8 @@ local function main()
     drive.write(string.rep("\0", 14 + name:len()+1 + len)) -- wipe section of tape
     print("File deleted")
 
-  elseif arg[1] == "list" then
+  end,
+  list = function()
     seek(0)
     local used = 0
     repeat
@@ -186,7 +194,8 @@ local function main()
     until name == nil
     print(used, "used of", drive.getSize())
 
-  elseif arg[1] == "wipe" then
+  end,
+  wipe = function()
     term.write("Are you sure (y/n)? ")
     local selection = read():lower()
     if selection == "y" then
@@ -209,8 +218,31 @@ local function main()
       end
       print()
     end
-  elseif arg[1] == "size" then
+
+  end,
+  size = function()
     print(drive.getSize())
+
+  end,
+  lock = function()
+    if drive.lock then
+      print(drive.lock())
+    else
+      print("Tape drive cannot be locked.")
+    end
+  end,
+  unlock = function()
+    if drive.unlock then
+      print(drive.unlock())
+    else
+      print("Tape drive cannot be locked.")
+    end
+  end
+}
+
+local function main()
+  if arg[1] and operations[arg[1]] then
+    operations[arg[1]]()
   else
     printHelp()
   end

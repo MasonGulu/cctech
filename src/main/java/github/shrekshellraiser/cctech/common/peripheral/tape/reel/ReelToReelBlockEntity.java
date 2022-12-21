@@ -1,7 +1,6 @@
 package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
 
 import dan200.computercraft.api.lua.LuaException;
-import github.shrekshellraiser.cctech.client.screen.tape.ReelToReelMenu;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
@@ -55,18 +54,6 @@ public class ReelToReelBlockEntity extends TapeBlockEntity {
         deviceDir = ReelItem.getDeviceDir();
         peripheral = new ReelToReelPeripheral(this);
         ticksPerByte = 1.0 / (CCTechCommonConfigs.REEL_BYTES_PER_SECOND.get() / 20.0);
-    }
-
-
-    @Override
-    public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("block.cctech.reel_to_reel");
-    }
-
-    @Nullable
-    @Override
-    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return new ReelToReelMenu(pContainerId, pPlayerInventory, this);
     }
 
     public boolean setLock(boolean state) throws LuaException {
