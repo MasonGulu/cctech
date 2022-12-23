@@ -226,14 +226,14 @@ local operations = {
   end,
   lock = function()
     if drive.lock then
-      print(drive.lock())
+      drive.lock(true)
     else
       print("Tape drive cannot be locked.")
     end
   end,
   unlock = function()
-    if drive.unlock then
-      print(drive.unlock())
+    if drive.lock then
+      drive.lock(false)
     else
       print("Tape drive cannot be locked.")
     end
