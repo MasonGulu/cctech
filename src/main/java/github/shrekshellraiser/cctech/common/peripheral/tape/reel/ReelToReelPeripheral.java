@@ -35,6 +35,12 @@ public class ReelToReelPeripheral extends TapePeripheral {
         return tileEntity.seekAbs(computerAccess, loc, async.orElse(false));
     }
 
+    @Override
+    @LuaFunction
+    public boolean isReady() {
+        return ((ReelToReelBlockEntity) tileEntity).isLocked && super.isReady();
+    }
+
     @LuaFunction
     public final int getPos() {
         return ((ReelToReelBlockEntity)tileEntity).getPointer();

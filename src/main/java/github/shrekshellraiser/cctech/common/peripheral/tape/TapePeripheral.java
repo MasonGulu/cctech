@@ -6,6 +6,7 @@ import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
+import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -49,8 +50,8 @@ public abstract class TapePeripheral implements IPeripheral {
     }
 
     @LuaFunction
-    public final boolean isReady() {
-        return tileEntity.getItem() instanceof CassetteItem;
+    public boolean isReady() {
+        return tileEntity.getItem() instanceof TapeItem;
     }
 
     @LuaFunction
