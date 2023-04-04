@@ -87,51 +87,56 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
         return event;
     }
 
-    // TODO method result
+    private void enforcePointer() {
+        pointer = Math.max(pointer, 0);
+        pointer = Math.min(pointer, data.length - POINTER_SIZE);
+    }
+
+    private MethodResult seek(IComputerAccess computerAccess, int distanceMoved, boolean async) throws LuaException {
+        var event = syncQueue(distanceMoved, "tape_seek",
+                (int)(distanceMoved * ticksPerByte), computerAccess);
+        if (async) {
+            return MethodResult.of(true);
+        }
+        return event;
+    }
+
     public MethodResult seekRel(IComputerAccess computerAccess, int offset, boolean async) throws LuaException {
         assertReady();
         dataChanged = true;
         int startingPointer = pointer;
         pointer += offset;
-        pointer = Math.max(pointer, 0);
-        pointer = Math.min(pointer, data.length - POINTER_SIZE);
-
+        enforcePointer();
         int distanceMoved = pointer - startingPointer;
-        var event = syncQueue(distanceMoved, "tape_seek", (int)(distanceMoved * ticksPerByte), computerAccess);
-        if (async) {
-            return MethodResult.of(true);
-        }
-        return event;
+        return seek(computerAccess, distanceMoved, async);
     }
 
-    // TODO method result
     public MethodResult seekAbs(IComputerAccess computerAccess, int target, boolean async) throws LuaException {
         assertReady();
         dataChanged = true;
         int oldPos = pointer;
         pointer = target;
-        pointer = Math.max(pointer, 0);
-        pointer = Math.min(pointer, data.length - POINTER_SIZE);
-
+        enforcePointer();
         int distanceMoved = pointer - oldPos;
-        var event = syncQueue(distanceMoved, "tape_seek",
-                (int) (ticksPerByte * distanceMoved), computerAccess);
-        if (async) {
-            return MethodResult.of(true);
-        }
-        return event;
+        return seek(computerAccess, distanceMoved, async);
     }
 
-    // TODO method result
     public MethodResult write(IComputerAccess computerAccess, String str, boolean async) throws LuaException {
         assertReady();
         byte[] chars = str.getBytes(StandardCharsets.ISO_8859_1);
         dataChanged = true;
 
         int maxPointer = data.length - POINTER_SIZE;
-        if (pointer > maxPointer) {
+        int endPointer = pointer + str.length();
+        if (endPointer > maxPointer) {
             // this would normally error
-            eventQueue.add(new QueueItem(false, "tape_write", str.length(), computerAccess));
+            int writeAmount = pointer - maxPointer;
+            System.arraycopy(chars, 0, data, pointer+POINTER_SIZE, writeAmount);
+            pointer += writeAmount;
+            eventQueue.add(new QueueItem(false, "tape_write", (int) (ticksPerByte * writeAmount), computerAccess));
+            if (async) {
+                return MethodResult.of(false);
+            }
             return new EventFinished("tape_write").getMethodResult();
         }
         System.arraycopy(chars, 0, data, pointer+POINTER_SIZE, str.length());
@@ -182,53 +187,61 @@ public abstract class TapeBlockEntity extends StorageBlockEntity {
 
     protected int timer;
 
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, TapeBlockEntity pBlockEntity) {
-        switch (pBlockEntity.queueState) {
-            case FREE -> {
-                while (!pBlockEntity.eventQueue.isEmpty() && pBlockEntity.queueState == QueueState.FREE) {
-                    pBlockEntity.currentItem = pBlockEntity.eventQueue.poll();
-                    pBlockEntity.queueState = QueueState.WAITING;
-                    pBlockEntity.timer = pBlockEntity.currentItem.ticks;
-                    if (pBlockEntity.timer == 0) {
-                        // this is a 0 tick timer, so queue event immediately
-                        QueueItem item = pBlockEntity.currentItem;
-                        item.computerAccess.queueEvent(item.eventName,
-                                item.computerAccess.getAttachmentName(), true, item.returnValue);
-                        pBlockEntity.queueState = QueueState.FREE;
-                    }
+    private static void getItemFromQueue(TapeBlockEntity pBlockEntity) {
+        while (!pBlockEntity.eventQueue.isEmpty() && pBlockEntity.queueState == QueueState.FREE) {
+            pBlockEntity.currentItem = pBlockEntity.eventQueue.poll();
+            pBlockEntity.queueState = QueueState.WAITING;
+            pBlockEntity.timer = pBlockEntity.currentItem.ticks;
+            if (pBlockEntity.timer == 0) {
+                // this is a 0 tick timer, so queue event immediately
+                QueueItem item = pBlockEntity.currentItem;
+                item.computerAccess.queueEvent(item.eventName,
+                        item.computerAccess.getAttachmentName(), true, item.returnValue);
+                pBlockEntity.queueState = QueueState.FREE;
+            }
+        }
+    }
+
+    private static void tickItem(TapeBlockEntity pBlockEntity) {
+        QueueItem item = pBlockEntity.currentItem;
+        try {
+            item.computerAccess.getAttachmentName();
+        } catch (NotAttachedException NAE) {
+            pBlockEntity.queueState = QueueState.FREE; // If the computer is removed cancel this event
+            pBlockEntity.currentItem = null;
+            return;
+        }
+        if (pBlockEntity.timer-- <= 0) {
+            if (item.assertReady) {
+                try {
+                    pBlockEntity.assertReady();
+                } catch (LuaException e) {
+                    item.computerAccess.queueEvent(item.eventName,
+                            item.computerAccess.getAttachmentName(), false, e.toString());
+                    return;
                 }
             }
-            case WAITING -> {
-                QueueItem item = pBlockEntity.currentItem;
+            // This timer is done, queue the event
+            pBlockEntity.queueState = QueueState.FREE;
+            if (item.assertReady) {
                 try {
-                    item.computerAccess.getAttachmentName();
-                } catch (NotAttachedException NAE) {
-                    pBlockEntity.queueState = QueueState.FREE; // If the computer is removed cancel this event
-                }
-                if (pBlockEntity.timer-- <= 0) {
-                    if (item.assertReady) {
-                        try {
-                            pBlockEntity.assertReady();
-                        } catch (LuaException e) {
-                            item.computerAccess.queueEvent(item.eventName,
-                                    item.computerAccess.getAttachmentName(), false, e.toString());
-                            return;
-                        }
-                    }
-                    // This timer is done, queue the event
-                    pBlockEntity.queueState = QueueState.FREE;
-                    if (item.assertReady) {
-                        try {
-                            pBlockEntity.assertReady();
-                        } catch (LuaException e) {
-                            item.computerAccess.queueEvent(item.eventName,
-                                    item.computerAccess.getAttachmentName(), false, e.toString());
-                            return;
-                        }
-                    }
+                    pBlockEntity.assertReady();
+                } catch (LuaException e) {
                     item.computerAccess.queueEvent(item.eventName,
-                            item.computerAccess.getAttachmentName(), true, item.returnValue);
+                            item.computerAccess.getAttachmentName(), false, e.toString());
+                    return;
                 }
+            }
+            item.computerAccess.queueEvent(item.eventName,
+                    item.computerAccess.getAttachmentName(), true, item.returnValue);
+        }
+    }
+
+    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, TapeBlockEntity pBlockEntity) {
+        if (!pLevel.isClientSide()) {
+            switch (pBlockEntity.queueState) {
+                case FREE -> getItemFromQueue(pBlockEntity);
+                case WAITING -> tickItem(pBlockEntity);
             }
         }
     }

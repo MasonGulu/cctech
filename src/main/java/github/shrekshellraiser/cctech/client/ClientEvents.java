@@ -1,10 +1,14 @@
 package github.shrekshellraiser.cctech.client;
 
 import github.shrekshellraiser.cctech.CCTech;
+import github.shrekshellraiser.cctech.client.render.CardWriterBlockEntityRenderer;
+import github.shrekshellraiser.cctech.client.render.CassetteDeckBlockEntityRenderer;
+import github.shrekshellraiser.cctech.client.render.ReelToReelBlockEntityRenderer;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
-import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntityRenderer;
-import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntityRenderer;
+import github.shrekshellraiser.cctech.common.item.ModItems;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +23,13 @@ public class ClientEvents {
                     CassetteDeckBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.REEL_TO_REEL.get(),
                     ReelToReelBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.CARD_WRITER.get(),
+                    CardWriterBlockEntityRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerItemColors(ColorHandlerEvent.Item event){
+            event.getItemColors().register((ItemColor) ModItems.MAG_CARD.get(), ModItems.MAG_CARD.get());
         }
     }
 }

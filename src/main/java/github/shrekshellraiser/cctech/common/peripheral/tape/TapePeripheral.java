@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
 
 import javax.annotation.Nonnull;
@@ -18,20 +17,6 @@ public abstract class TapePeripheral implements IPeripheral {
 
     public TapePeripheral(TapeBlockEntity tileEntity) {
         this.tileEntity = tileEntity;
-    }
-
-    private Timer eventTimer;
-
-    protected void startEventTimer(Object val, long delay) {
-        eventTimer = new Timer();
-        eventTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for (IComputerAccess computer : connectedComputers) {
-                    computer.queueEvent("cassette_finished", val);
-                }
-            }
-        }, 0L);
     }
 
     @Override
@@ -87,26 +72,4 @@ public abstract class TapePeripheral implements IPeripheral {
     public final int getSize() throws LuaException {
         return tileEntity.getSize();
     }
-//
-//    private final class TapeFinished implements ILuaCallback {
-//        MethodResult methodResult = MethodResult.pullEvent(null, this);
-//        /**
-//         * Resume this coroutine.
-//         *
-//         * @param args The result of resuming this coroutine. These will have the same form as described in
-//         *             {@link LuaFunction}.
-//         * @return The result of this continuation. Either the result to return to the callee, or another yield.
-//         * @throws LuaException On an error.
-//         */
-//        @NotNull
-//        @Override
-//        public MethodResult resume(Object[] args) throws LuaException {
-//            boolean cassetteFinished = "cassette_finished".equals(args[0]);
-//            if (cassetteFinished) {
-//                return MethodResult.of(args[1]);
-//            }
-//            tileEntity.assertReady();
-//            return MethodResult.pullEvent(null, this);
-//        }
-//    }
 }

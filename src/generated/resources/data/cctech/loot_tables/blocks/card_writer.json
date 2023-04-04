@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cctech:zip_drive"
+          "name": "cctech:card_writer"
         }
       ],
       "conditions": [

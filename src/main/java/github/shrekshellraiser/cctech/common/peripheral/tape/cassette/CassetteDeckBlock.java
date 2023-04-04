@@ -3,7 +3,9 @@ package github.shrekshellraiser.cctech.common.peripheral.tape.cassette;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.peripheral.StorageBlock;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
+import github.shrekshellraiser.cctech.common.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -51,21 +53,20 @@ public class CassetteDeckBlock extends StorageBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
-            BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof CassetteDeckBlockEntity cassetteDeckBlockEntity) {
-//                NetworkHooks.openGui(((ServerPlayer) pPlayer), (CassetteDeckBlockEntity) entity, pPos);
-                // TODO add functionality
-                if (pPlayer.isShiftKeyDown()) {
-                    boolean isOpen = pState.getValue(ModProperties.OPEN);
-                    pState = pState.setValue(ModProperties.OPEN, !isOpen);
-                    pLevel.setBlock(pPos, pState, 3);
-                    pLevel.blockEntityChanged(pPos);
-                    pLevel.updateNeighbourForOutputSignal(pPos, pState.getBlock());
-                } else if (pState.getValue(ModProperties.OPEN)) {
-                    cassetteDeckBlockEntity.onRightClick(pLevel, pPlayer, pHand);
+            CassetteDeckBlockEntity entity = (CassetteDeckBlockEntity) pLevel.getBlockEntity(pPos);
+            if (pPlayer.isShiftKeyDown()) {
+                boolean isOpen = pState.getValue(ModProperties.OPEN);
+                pState = pState.setValue(ModProperties.OPEN, !isOpen);
+                pLevel.setBlock(pPos, pState, 3);
+                pLevel.blockEntityChanged(pPos);
+                pLevel.updateNeighbourForOutputSignal(pPos, pState.getBlock());
+                if (isOpen) {
+                    pLevel.playSound(null, pPos, ModSounds.CASSETTE_DECK_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f);
+                } else {
+                    pLevel.playSound(null, pPos, ModSounds.CASSETTE_DECK_OPEN.get(), SoundSource.BLOCKS, 1f, 1f);
                 }
-            } else {
-                throw new IllegalStateException("Clicked on a block that isn't the cassette deck but also is???");
+            } else if (pState.getValue(ModProperties.OPEN)) {
+                entity.onRightClick(pLevel, pPlayer, pHand);
             }
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide());

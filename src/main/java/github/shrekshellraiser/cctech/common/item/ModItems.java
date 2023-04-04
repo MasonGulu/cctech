@@ -2,6 +2,7 @@ package github.shrekshellraiser.cctech.common.item;
 
 import github.shrekshellraiser.cctech.CCTech;
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
+import github.shrekshellraiser.cctech.common.item.cards.MagCardItem;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.ReelItem;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
@@ -40,6 +41,8 @@ public class ModItems {
             new ReelItem(CCTechCommonConfigs.DIAMOND_REEL.get(), DEFAULT_SIZE));
     public static final RegistryObject<Item> CREATIVE_REEL = ITEMS.register("creative_reel", () ->
             new ReelItem(CCTechCommonConfigs.CREATIVE_REEL.get(), DEFAULT_SIZE));
+
+    public static final RegistryObject<Item> MAG_CARD = ITEMS.register("magnetic_card", MagCardItem::new);
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

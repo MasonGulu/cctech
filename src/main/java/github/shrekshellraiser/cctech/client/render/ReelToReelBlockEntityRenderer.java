@@ -1,10 +1,11 @@
-package github.shrekshellraiser.cctech.common.peripheral.tape.reel;
+package github.shrekshellraiser.cctech.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlockEntity;
+import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;

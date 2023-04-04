@@ -35,7 +35,7 @@ public class TapeItem extends StorageItem {
             int maxLength = ((TapeItem) pStack.getItem()).maxLength;
             String dataLength = (curLength + " / " + maxLength + " bytes");
             pTooltipComponents.add(new TextComponent(dataLength));
-            String audioLength = curLength/8000 + " / " + maxLength/8000 + " seconds";
+            String audioLength = curLength/6000 + " / " + maxLength/6000 + " seconds";
             pTooltipComponents.add(new TextComponent(audioLength));
         }
     }

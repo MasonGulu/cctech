@@ -18,5 +18,10 @@
 
   "itemGroup.cctech_tab": "CCTech",
 
-  "block.cctech.zip_drive": "Zip Drive"
+  "block.cctech.magnetic_card_reader": "Magnetic Card Reader",
+  "block.cctech.card_writer": "Card Writer",
+  "item.cctech.magnetic_card": "Magnetic Card",
+
+  "sounds.cctech.cassette_deck_open": "Cassette deck opening",
+  "sounds.cctech.cassette_deck_close": "Cassette deck closing"
 }

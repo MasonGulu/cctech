@@ -1,6 +1,8 @@
 package github.shrekshellraiser.cctech.common;
 
 import github.shrekshellraiser.cctech.CCTech;
+import github.shrekshellraiser.cctech.common.peripheral.cards.CardWriterBlock;
+import github.shrekshellraiser.cctech.common.peripheral.cards.MagCardBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.cassette.CassetteDeckBlock;
 import github.shrekshellraiser.cctech.common.peripheral.tape.reel.ReelToReelBlock;
 import github.shrekshellraiser.cctech.common.item.ModItems;
@@ -24,6 +26,16 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> REEL_TO_REEL = registerBlock("reel_to_reel",
             ReelToReelBlock::new, ModCreativeModeTab.CCTECH_TAB);
+
+    public static final RegistryObject<Block> MAG_CARD_READER = registerBlock("magnetic_card_reader",
+            MagCardBlock::new, ModCreativeModeTab.CCTECH_TAB);
+
+    // TODO add variants
+//    public static final RegistryObject<Block> DESK_MAG_CARD_READER = registerBlock("desk_magnetic_card_reader",
+//            MagCardBlock::new, ModCreativeModeTab.CCTECH_TAB);
+
+    public static final RegistryObject<Block> CARD_WRITER = registerBlock("card_writer",
+            CardWriterBlock::new, ModCreativeModeTab.CCTECH_TAB);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

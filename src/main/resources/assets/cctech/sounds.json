@@ -1,0 +1,14 @@
+{
+  "cassette_deck_open" : {
+    "subtitle": "sounds.cctech.cassette_deck_open",
+    "sounds": [
+      "cctech:cassette_deck_open"
+    ]
+  },
+  "cassette_deck_close" : {
+    "subtitle": "sounds.cctech.cassette_deck_close",
+    "sounds": [
+      "cctech:cassette_deck_close"
+    ]
+  }
+}

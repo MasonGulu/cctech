@@ -1,8 +1,6 @@
 package github.shrekshellraiser.cctech.common.peripheral;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import github.shrekshellraiser.cctech.CCTech;
-import github.shrekshellraiser.cctech.common.ModProperties;
 import github.shrekshellraiser.cctech.common.item.StorageItem;
 import github.shrekshellraiser.cctech.common.item.tape.CassetteItem;
 import github.shrekshellraiser.cctech.common.item.tape.TapeItem;
@@ -12,11 +10,7 @@ import github.shrekshellraiser.cctech.server.FileManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -84,7 +78,6 @@ public abstract class StorageBlockEntity extends BlockEntity {
         };
     }
     protected void itemInserted(ItemStack item) {
-        CCTech.LOGGER.debug("Storage item inserted");
         loadData(item);
         deviceInserted = true;
     }
@@ -115,7 +108,6 @@ public abstract class StorageBlockEntity extends BlockEntity {
         inventory.setItem(0, itemHandler.getStackInSlot(0)); // discreet drop handling
         ItemStack cassette = itemHandler.getStackInSlot(0);
         if (cassette.getItem() instanceof StorageItem) {
-            CCTech.LOGGER.debug("Cassette dropped out of drive");
             saveData(cassette);
             deviceInserted = false;
         }
@@ -138,7 +130,6 @@ public abstract class StorageBlockEntity extends BlockEntity {
         super.saveAdditional(tag);
         ItemStack cassette = itemHandler.getStackInSlot(0);
         if (cassette.getItem() instanceof TapeItem) {
-            CCTech.LOGGER.debug("Device in drive on drive save");
             saveData(cassette);
             deviceInserted = true;
         }
@@ -157,7 +148,6 @@ public abstract class StorageBlockEntity extends BlockEntity {
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         ItemStack cassette = itemHandler.getStackInSlot(0);
         if (cassette.getItem() instanceof TapeItem) {
-            CCTech.LOGGER.debug("Device in drive on drive load");
             loadData(cassette);
             deviceInserted = true;
         }

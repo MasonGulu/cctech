@@ -1,11 +1,11 @@
 package github.shrekshellraiser.cctech;
 
+import github.shrekshellraiser.cctech.common.sounds.ModSounds;
 import github.shrekshellraiser.cctech.common.ModBlocks;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.item.ModItems;
 import github.shrekshellraiser.cctech.common.config.CCTechCommonConfigs;
 import github.shrekshellraiser.cctech.common.network.ModMessages;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,6 +32,7 @@ public class CCTech {
         ModBlocks.register(eventBus);
         ModItems.register(eventBus);
         ModBlockEntities.register(eventBus);
+        ModSounds.register(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
@@ -54,5 +55,6 @@ public class CCTech {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.REEL_TO_REEL.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CARD_WRITER.get(), RenderType.cutout());
     }
 }

@@ -29,7 +29,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TAPE_HEAD.get());
         simpleItem(ModItems.TAPE.get());
 
-
+        simpleItem(ModItems.MAG_CARD.get());
     }
 
     // Credit for this goes to https://www.youtube.com/c/TKaupenjoe
