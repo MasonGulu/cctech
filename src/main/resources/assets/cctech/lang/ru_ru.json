@@ -1,0 +1,22 @@
+{
+  "item.cctech.iron_cassette": "Железная кассета",
+  "item.cctech.gold_cassette": "Золотая кассета",
+  "item.cctech.diamond_cassette": "Алмазная кассета",
+  "item.cctech.creative_cassette": "Творческая кассета",
+
+  "block.cctech.cassette_deck": "Кассетный магнитофон",
+
+  "item.cctech.iron_reel": "Железная катушка",
+  "item.cctech.gold_reel": "Золотая катушка",
+  "item.cctech.diamond_reel": "Алмазная катушка",
+  "item.cctech.creative_reel": "Творческая катушка",
+
+  "block.cctech.reel_to_reel": "Ленточный накопитель",
+
+  "item.cctech.tape": "Магнитная лента",
+  "item.cctech.tape_head": "Магнитная головка",
+
+  "itemGroup.cctech_tab": "CCTech",
+
+  "block.cctech.zip_drive": "Zip диск"
+}
