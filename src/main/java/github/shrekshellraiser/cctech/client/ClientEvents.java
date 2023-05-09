@@ -6,6 +6,7 @@ import github.shrekshellraiser.cctech.client.render.CassetteDeckBlockEntityRende
 import github.shrekshellraiser.cctech.client.render.ReelToReelBlockEntityRenderer;
 import github.shrekshellraiser.cctech.common.ModBlockEntities;
 import github.shrekshellraiser.cctech.common.item.ModItems;
+import github.shrekshellraiser.cctech.common.item.cards.MagCardItem;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -29,7 +30,7 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerItemColors(ColorHandlerEvent.Item event){
-            event.getItemColors().register((ItemColor) ModItems.MAG_CARD.get(), ModItems.MAG_CARD.get());
+            event.getItemColors().register((stack,tint) -> ((MagCardItem) stack.getItem()).getColor(stack), ModItems.MAG_CARD.get());
         }
     }
 }

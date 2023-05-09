@@ -1,7 +1,6 @@
 package github.shrekshellraiser.cctech.common.item.cards;
 
 import github.shrekshellraiser.cctech.common.ModCreativeModeTab;
-import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class MagCardItem extends Item implements DyeableLeatherItem, ItemColor {
+public class MagCardItem extends Item implements DyeableLeatherItem {
     private final String UUIDTag = "cctech.uuid";
     private final String LabelTag = "cctech.label";
     private final String ContentsTag = "cctech.contents";
@@ -103,8 +102,6 @@ public class MagCardItem extends Item implements DyeableLeatherItem, ItemColor {
         }
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
-
-    @Override
     public int getColor(ItemStack pStack, int pTintIndex) {
         CompoundTag compoundtag = pStack.getTagElement("display");
         return compoundtag != null && compoundtag.contains("color", 99) ? compoundtag.getInt("color") : 0xFFFFFF;
